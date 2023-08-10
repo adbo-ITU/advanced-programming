@@ -58,7 +58,9 @@ recursive implementations of the factorial example for self-study.
 
 In this course we are using:
 
+```
 openjdk    v. 11.0.19 you need to install, other versions might work
 scala-cli  v. 1.01    you need to install
 scala      v. 3.3.0   installed and configured automatically for you
 scalacheck v. 1.17.0  installed and configured automatically for you
+```
