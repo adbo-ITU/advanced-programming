@@ -54,10 +54,10 @@ def isSorted[A](as: Array[A], ordered: (A, A) => Boolean): Boolean =
 // Exercise 5
 
 def curry[A, B, C](f: (A, B) => C): A => (B => C) =
-  ???
+  (a) => f(a, _)
 
 def isSortedCurried[A]: Array[A] => ((A, A) => Boolean) => Boolean =
-  ???
+  curry(isSorted)
 
 // Exercise 6
 
