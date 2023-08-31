@@ -1,6 +1,8 @@
 // Advanced Programming, A. Wąsowski, IT University of Copenhagen
 // Based on Functional Programming in Scala, 2nd Edition
 
+// Solved in collaboration with Joachim Borup <aljb@itu.dk>
+
 package adpro.intro
 
 object MyModule:
