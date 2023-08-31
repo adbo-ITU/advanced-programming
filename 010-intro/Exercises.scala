@@ -70,4 +70,4 @@ def isSortedCurriedUncurried[A]: (Array[A], (A, A) => Boolean) => Boolean =
 // Exercise 7
 
 def compose[A, B, C](f: B => C, g: A => B): A => C =
-  ???
+  a => f(g(a))
