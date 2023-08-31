@@ -8,6 +8,7 @@
 *.class
 *.log
 metals.sbt
+.metals
 
 # sbt specific
 .cache
