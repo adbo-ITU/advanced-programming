@@ -13,7 +13,7 @@ object MyModule:
   // Exercise 1
 
   def square(n: Int): Int =
-    ???
+    n * n
 
   private def formatAbs(x: Int): String =
     s"The absolute value of ${x} is ${abs(x)}"
@@ -24,6 +24,7 @@ object MyModule:
   @main def printAbs: Unit =
     assert(magic - 84 == magic.-(84))
     println(formatAbs(magic - 100))
+    println(s"And the square is ${square(magic)}")
 
 end MyModule
 
