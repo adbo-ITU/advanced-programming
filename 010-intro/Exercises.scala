@@ -62,10 +62,10 @@ def isSortedCurried[A]: Array[A] => ((A, A) => Boolean) => Boolean =
 // Exercise 6
 
 def uncurry[A, B, C](f: A => B => C): (A, B) => C =
-  ???
+  f(_)(_)
 
 def isSortedCurriedUncurried[A]: (Array[A], (A, A) => Boolean) => Boolean =
-  ???
+  uncurry(isSortedCurried)
 
 // Exercise 7
 
