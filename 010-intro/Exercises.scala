@@ -43,7 +43,13 @@ def fib(n: Int): Int =
 // Exercise 4
 
 def isSorted[A](as: Array[A], ordered: (A, A) => Boolean): Boolean =
-  ???
+  @annotation.tailrec
+  def checker(i: Int, l: Array[A]): Boolean =
+    if i >= l.length - 1 then true
+    else if !ordered(l(i), l(i + 1)) then false
+    else checker(i + 1, l)
+
+  checker(0, as)
 
 // Exercise 5
 
