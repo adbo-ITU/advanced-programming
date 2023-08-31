@@ -33,7 +33,12 @@ end MyModule
 // Exercise 3
 
 def fib(n: Int): Int =
-  ???
+  @annotation.tailrec
+  def f(n: Int, f1: Int, f2: Int): Int =
+    if n <= 0 then f1
+    else f(n - 1, f2, f1 + f2)
+
+  f(n - 1, 0, 1)
 
 // Exercise 4
 
