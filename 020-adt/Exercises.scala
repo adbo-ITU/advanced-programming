@@ -93,7 +93,8 @@ object List:
 
   // Exercise 10
 
-  def foldRight1[A, B](l: List[A], z: B, f: (A, B) => B): B = ???
+  def foldRight1[A, B](l: List[A], z: B, f: (A, B) => B): B =
+    foldLeft(reverse(l), z, (a, b) => f(b, a))
 
   // Exercise 11
 
