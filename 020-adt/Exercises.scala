@@ -111,7 +111,8 @@ object List:
 
   // Exercise 13
 
-  def filter[A](l: List[A], p: A => Boolean): List[A] = ???
+  def filter[A](l: List[A], p: A => Boolean): List[A] =
+    foldRight(l, Nil: List[A], (a, z) => if p(a) then Cons(a, z) else z)
 
   // Exercise 14
 
