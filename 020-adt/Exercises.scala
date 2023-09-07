@@ -67,7 +67,8 @@ object List:
 
   // Exercise 6
 
-  def length[A](l: List[A]): Int = ???
+  def length[A](l: List[A]): Int =
+    foldRight(l, 0, (_, len) => len + 1)
 
   // Exercise 7
 
