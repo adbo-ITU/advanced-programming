@@ -88,7 +88,8 @@ object List:
 
   // Exercise 9
 
-  def reverse[A](l: List[A]): List[A] = ???
+  def reverse[A](l: List[A]): List[A] =
+    foldLeft(l, Nil: List[A], (z, h) => Cons(h, z))
 
   // Exercise 10
 
