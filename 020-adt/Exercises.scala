@@ -131,12 +131,14 @@ object List:
   def addPairwise(l: List[Int], r: List[Int]): List[Int] =
     (l, r) match
       case (Cons(lh, lt), Cons(rh, rt)) => Cons(lh + rh, addPairwise(lt, rt))
-      case (_, Nil) | (Nil, _)          => Nil
       case (Nil, _) | (_, Nil)          => Nil
 
   // Exercise 17
 
-  def zipWith[A, B, C](l: List[A], r: List[B], f: (A, B) => C): List[C] = ???
+  def zipWith[A, B, C](l: List[A], r: List[B], f: (A, B) => C): List[C] =
+    (l, r) match
+      case (Cons(lh, lt), Cons(rh, rt)) => Cons(f(lh, rh), zipWith(lt, rt, f))
+      case (Nil, _) | (_, Nil)          => Nil
 
   // Exercise 18
 
