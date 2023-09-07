@@ -127,7 +127,12 @@ object List:
 
   // Exercise 16
 
-  def addPairwise(l: List[Int], r: List[Int]): List[Int] = ???
+  // I know they said no standard recursion, but there is no zip or similar for our List
+  def addPairwise(l: List[Int], r: List[Int]): List[Int] =
+    (l, r) match
+      case (Cons(lh, lt), Cons(rh, rt)) => Cons(lh + rh, addPairwise(lt, rt))
+      case (_, Nil) | (Nil, _)          => Nil
+      case (Nil, _) | (_, Nil)          => Nil
 
   // Exercise 17
 
