@@ -98,7 +98,8 @@ object List:
 
   // Exercise 11
 
-  def foldLeft1[A, B](l: List[A], z: B, f: (B, A) => B): B = ???
+  def foldLeft1[A, B](l: List[A], z: B, f: (B, A) => B): B =
+    foldRight[A, B => B](l, identity, (a, c) => b => c(f(b, a)))(z)
 
   // Exercise 12
 
