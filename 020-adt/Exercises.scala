@@ -122,7 +122,8 @@ object List:
 
   // Exercise 15
 
-  def filter1[A](l: List[A], p: A => Boolean): List[A] = ???
+  def filter1[A](l: List[A], p: A => Boolean): List[A] =
+    flatMap(l, a => if p(a) then List(a) else Nil)
 
   // Exercise 16
 
