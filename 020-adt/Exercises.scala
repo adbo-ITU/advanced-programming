@@ -57,7 +57,13 @@ object List:
 
   // Exercise 5
 
-  def init[A](l: List[A]): List[A] = ???
+  // Takes O(n) time since the whole list is traversed.
+  // Takes O(n) space too since the root of the list is "changed".
+  def init[A](l: List[A]): List[A] =
+    l match
+      case Cons(_, Nil) => Nil
+      case Cons(h, t)   => Cons(h, init(t))
+      case Nil          => throw NoSuchElementException()
 
   // Exercise 6
 
