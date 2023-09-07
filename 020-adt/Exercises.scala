@@ -42,7 +42,11 @@ object List:
 
   // Exercise 3
 
-  def drop[A](l: List[A], n: Int): List[A] = ???
+  def drop[A](l: List[A], n: Int): List[A] =
+    l match
+      case _ if n <= 0 => l
+      case Cons(_, t)  => drop(t, n - 1)
+      case Nil         => throw NoSuchElementException()
 
   // Exercise 4
 
