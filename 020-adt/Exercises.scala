@@ -142,4 +142,10 @@ object List:
 
   // Exercise 18
 
-  def hasSubsequence[A](sup: List[A], sub: List[A]): Boolean = ???
+  // Very much inspired by a discussion with the legendary Joachim <aljb>
+  def hasSubsequence[A](sup: List[A], sub: List[A]): Boolean =
+    (sup, sub) match
+      case (_, Nil)                                 => true
+      case (Nil, _)                                 => false
+      case (Cons(ah, at), Cons(bh, bt)) if ah == bh => hasSubsequence(at, bt)
+      case (Cons(_, at), b)                         => hasSubsequence(at, b)
