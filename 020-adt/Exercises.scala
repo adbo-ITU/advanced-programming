@@ -35,7 +35,10 @@ object List:
 
   // Exercise 2
 
-  def tail[A](l: List[A]): List[A] = ???
+  def tail[A](l: List[A]): List[A] =
+    l match
+      case Nil        => throw NoSuchElementException()
+      case Cons(_, t) => t
 
   // Exercise 3
 
