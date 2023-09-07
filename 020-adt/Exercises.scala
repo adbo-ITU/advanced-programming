@@ -80,9 +80,11 @@ object List:
 
   // Exercise 8
 
-  def product(as: List[Int]): Int = ???
+  def product(as: List[Int]): Int =
+    foldLeft(as, 1, _ * _)
 
-  def length1[A](as: List[A]): Int = ???
+  def length1[A](as: List[A]): Int =
+    foldLeft(as, 0, (z, _) => 1 + z)
 
   // Exercise 9
 
