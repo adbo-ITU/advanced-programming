@@ -6,13 +6,13 @@ package adpro
 import scala.quoted.*
 import scala.quoted.FromExpr.*
 
-inline def annotations[T] (fname: String): Seq[String] = 
+inline def annotations[T] (fname: String): Seq[String] =
   ${annotationsImpl[T]('fname)}
-  
+
 def annotationsImpl[T: Type] (fname: Expr[String]) (using Quotes)
   : Expr[Seq[String]] =
   import quotes.reflect.*
-  val result = for 
+  val result = for
     f <- TypeRepr.of[T]
           .typeSymbol
           .methodMember(fname.value.get)
