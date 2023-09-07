@@ -50,7 +50,10 @@ object List:
 
   // Exercise 4
 
-  def dropWhile[A](l: List[A], p: A => Boolean): List[A] = ???
+  def dropWhile[A](l: List[A], p: A => Boolean): List[A] =
+    l match
+      case Cons(h, t) if p(h) => dropWhile(t, p)
+      case _                  => l
 
   // Exercise 5
 
