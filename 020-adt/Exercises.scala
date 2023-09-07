@@ -72,7 +72,11 @@ object List:
 
   // Exercise 7
 
-  def foldLeft[A, B](l: List[A], z: B, f: (B, A) => B): B = ???
+  @annotation.tailrec
+  def foldLeft[A, B](l: List[A], z: B, f: (B, A) => B): B =
+    l match
+      case Cons(h, t) => foldLeft(t, f(z, h), f)
+      case Nil        => z
 
   // Exercise 8
 
