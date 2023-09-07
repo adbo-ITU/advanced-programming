@@ -103,7 +103,11 @@ object List:
 
   // Exercise 12
 
-  def concat[A](l: List[List[A]]): List[A] = ???
+  // Takes linear time in total length of all lists because append is
+  // linear in its left argument (based on its source code). And each
+  // sublist is given as the left argument.
+  def concat[A](l: List[List[A]]): List[A] =
+    foldRight(l, Nil: List[A], append(_, _))
 
   // Exercise 13
 
