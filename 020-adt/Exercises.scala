@@ -116,7 +116,9 @@ object List:
 
   // Exercise 14
 
-  def flatMap[A, B](l: List[A], f: A => List[B]): List[B] = ???
+  def flatMap[A, B](l: List[A], f: A => List[B]): List[B] =
+    concat(map(l, f))
+    // Scala's type inference can't figure this out: (concat compose map)(l, f)
 
   // Exercise 15
 
