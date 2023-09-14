@@ -158,7 +158,17 @@ def mean(xs: Seq[Double]): Option[Double] =
 
 // Exercise 8
 
+// I assume that by "do not use pattern matching or map," "map" only refers to
+// the method on Option, not list - because the latter doesn't make sense.
+// IF that is not a correct assumption, this version uses no sort of map:
+//   mean(xs).flatMap(m => mean(xs.flatMap(x => List(math.pow(x - m, 2)))))
 def variance(xs: Seq[Double]): Option[Double] =
-  ???
+  mean(xs).flatMap(m => mean(xs.map(x => math.pow(x - m, 2))))
+
+def variance1(xs: Seq[Double]): Option[Double] =
+  for
+    m <- mean(xs)
+    v <- mean(xs.map(x => math.pow(x - m, 2)))
+  yield v
 
 // Scroll up, to the Option object for Exercise 9
