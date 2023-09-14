@@ -49,7 +49,10 @@ object Tree:
 
   // Exercise 3
 
-  def maximum(t: Tree[Int]): Int = ???
+  def maximum(t: Tree[Int]): Int =
+    t match
+      case Leaf(v)      => v
+      case Branch(l, r) => maximum(l) max maximum(r)
 
   // Exercise 4
 
