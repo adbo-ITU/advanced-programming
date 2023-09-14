@@ -83,15 +83,30 @@ enum Option[+A]:
 
   // Exercise 6
 
-  def map[B](f: A => B): Option[B] = ???
+  def map[B](f: A => B): Option[B] =
+    this match
+      case Some(v) => Some(f(v))
+      case None    => None
 
-  def getOrElse[B >: A](default: => B): B = ???
+  def getOrElse[B >: A](default: => B): B =
+    this match
+      case Some(v) => v
+      case None    => default
 
-  def flatMap[B](f: A => Option[B]): Option[B] = ???
+  def flatMap[B](f: A => Option[B]): Option[B] =
+    this match
+      case Some(v) => f(v)
+      case None    => None
 
-  def orElse[B >: A](ob: => Option[B]): Option[B] = ???
+  def orElse[B >: A](ob: => Option[B]): Option[B] =
+    this match
+      case Some(_) => this
+      case None    => ob
 
-  def filter(p: A => Boolean): Option[A] = ???
+  def filter(p: A => Boolean): Option[A] =
+    this match
+      case Some(v) if p(v) => this
+      case _               => None
 
   // Scroll down for Exercise 7, in the bottom of the file, outside Option
 
