@@ -129,7 +129,15 @@ object Option:
   // Exercise 11
 
   def traverse[A, B](as: List[A])(f: A => Option[B]): Option[List[B]] =
-    ???
+    // As a series of method calls:
+    //   as.foldRight[Option[List[B]]](Some(Nil))((a, z) => z.flatMap(z => f(a).map(_ :: z)))
+    // And as a for comprehension:
+    as.foldRight[Option[List[B]]](Some(Nil))((a, z) => {
+      for
+        results <- z
+        b <- f(a)
+      yield b :: results
+    })
 
 end Option
 
