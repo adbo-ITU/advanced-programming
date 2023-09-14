@@ -129,15 +129,16 @@ object Option:
   // Exercise 11
 
   def traverse[A, B](as: List[A])(f: A => Option[B]): Option[List[B]] =
-    // As a series of method calls:
-    //   as.foldRight[Option[List[B]]](Some(Nil))((a, z) => z.flatMap(z => f(a).map(_ :: z)))
-    // And as a for comprehension:
-    as.foldRight[Option[List[B]]](Some(Nil))((a, z) => {
+    // Instead of foldRight, I use foldLeft and reverse the result because I
+    // assume that the order of maps should be the same as the order of the
+    // elements in the list.
+    as.foldLeft[Option[List[B]]](Some(Nil))((z, a) => {
       for
         results <- z
         b <- f(a)
       yield b :: results
     })
+    .map(_.reverse)
 
 end Option
 
