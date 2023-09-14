@@ -124,7 +124,7 @@ object Option:
   // Exercise 10
 
   def sequence[A](aos: List[Option[A]]): Option[List[A]] =
-    ???
+    aos.foldRight[Option[List[A]]](Some(Nil))(map2(_, _)(_ :: _))
 
   // Exercise 11
 
