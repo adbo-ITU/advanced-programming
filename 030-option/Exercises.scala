@@ -9,7 +9,6 @@ trait OrderedPoint extends scala.math.Ordered[java.awt.Point]:
 
   this: java.awt.Point =>
 
-
   // I tried using this clean and logically correct solution, but it fails
   // tests due to integer overflow:
   //   scala> 2147483647 - (-1)
@@ -19,12 +18,12 @@ trait OrderedPoint extends scala.math.Ordered[java.awt.Point]:
   //     case (a, b) if a.x == b.x => a.y - b.y
   //     case (a, b) => a.x - b.x
   override def compare(that: java.awt.Point): Int =
-    (this, that) match
-      case (a, b) if a.x < b.x => -1
-      case (a, b) if a.x > b.x => 1
-      case (a, b) if a.y < b.y => -1
-      case (a, b) if a.y > b.y => 1
-      case _ => 0
+    that match
+      case t if x < t.x => -1
+      case t if x > t.x => 1
+      case t if y < t.y => -1
+      case t if y > t.y => 1
+      case _            => 0
 
 // Try the following (and similar) tests in the repl (sbt console):
 //
