@@ -63,13 +63,19 @@ object Tree:
 
   // Exercise 5
 
-  def fold[A, B](t: Tree[A])(f: (B, B) => B)(g: A => B): B = ???
+  def fold[A, B](t: Tree[A])(f: (B, B) => B)(g: A => B): B =
+    t match
+      case Leaf(v)      => g(v)
+      case Branch(l, r) => f(fold(l)(f)(g), fold(r)(f)(g))
 
-  def size1[A](t: Tree[A]): Int = ???
+  def size1[A](t: Tree[A]): Int =
+    fold[A, Int](t)(1 + _ + _)(_ => 1)
 
-  def maximum1(t: Tree[Int]): Int = ???
+  def maximum1(t: Tree[Int]): Int =
+    fold[Int, Int](t)(_ max _)(identity)
 
-  def map1[A, B](t: Tree[A])(f: A => B): Tree[B] = ???
+  def map1[A, B](t: Tree[A])(f: A => B): Tree[B] =
+    fold[A, Tree[B]](t)(Branch(_, _))(v => Leaf(f(v)))
 
 enum Option[+A]:
   case Some(get: A)
