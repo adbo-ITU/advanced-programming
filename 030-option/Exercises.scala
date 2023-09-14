@@ -144,10 +144,11 @@ def headOption[A](lst: List[A]): Option[A] = lst match
 // Exercise 7
 
 def headGrade(lst: List[(String, Int)]): Option[Int] =
-  ???
+  headOption(lst).map(_._2)
 
 def headGrade1(lst: List[(String, Int)]): Option[Int] =
-  ???
+  for h <- headOption(lst)
+  yield h._2
 
 // Implemented in the text book
 
