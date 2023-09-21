@@ -65,7 +65,9 @@ enum LazyList[+A]:
   // Exercise 2
 
   def toList: List[A] =
-    ???
+    this match
+      case Empty      => Nil
+      case Cons(h, t) => h() :: t().toList
 
   // Test in the REPL, for instance: LazyList(1,2,3).toList
   // (and see what list is constructed)
