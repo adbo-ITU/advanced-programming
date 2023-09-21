@@ -123,7 +123,7 @@ enum LazyList[+A]:
   // Exercise 7
 
   def headOption1: Option[A] =
-    ???
+    foldRight(None)((a, _) => Some(a))
 
   // Exercise 8
 
