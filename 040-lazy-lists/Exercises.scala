@@ -150,7 +150,7 @@ enum LazyList[+A]:
 
   // Note: The type is incorrect, you need to fix it
   def flatMap[B](f: A => LazyList[B]): LazyList[B] =
-    foldRight(Empty)((a, z) => f(a).foldRight(z)(cons))
+    foldRight(Empty)((a, z) => f(a).append(z))
 
   // Exercise 9
   // Type answer here
