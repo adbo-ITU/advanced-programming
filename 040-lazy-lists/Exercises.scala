@@ -75,10 +75,16 @@ enum LazyList[+A]:
   // Exercise 3
 
   def take(n: Int): LazyList[A] =
-    ???
+    this match
+      case Empty                => Empty
+      case Cons(_, _) if n <= 0 => Empty
+      case Cons(h, t)           => cons(h(), t().take(n - 1))
 
   def drop(n: Int): LazyList[A] =
-    ???
+    this match
+      case Empty       => Empty
+      case _ if n <= 0 => this
+      case Cons(h, t)  => t().drop(n - 1)
 
   // Exercise 4
 
