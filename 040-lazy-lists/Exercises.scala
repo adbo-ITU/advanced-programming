@@ -106,7 +106,10 @@ enum LazyList[+A]:
   // Note 2. this is also tail recursive (because of the special semantics
   // of ||)
   def exists(p: A => Boolean): Boolean =
-    ???
+    this match
+      case Empty                => false
+      case Cons(h, _) if p(h()) => true
+      case Cons(_, t)           => t().exists(p)
 
   // Exercise 6
 
