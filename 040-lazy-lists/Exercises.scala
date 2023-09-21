@@ -96,7 +96,10 @@ enum LazyList[+A]:
   // Exercise 5
 
   def forAll(p: A => Boolean): Boolean =
-    ???
+    this match
+      case Empty                => true
+      case Cons(h, t) if p(h()) => t().forAll(p)
+      case _                    => false
 
   // Note 1. lazy; tail is never forced if satisfying element found this is
   // because || is non-strict
