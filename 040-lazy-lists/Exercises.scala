@@ -127,13 +127,11 @@ enum LazyList[+A]:
 
   // Exercise 8
 
-  // Note: The type is incorrect, you need to fix it
-  def map(f: Any): LazyList[Int] =
-    ???
+  def map[B](f: A => B): LazyList[B] =
+    foldRight(Empty)((a, z) => cons(f(a), z))
 
-  // Note: The type is incorrect, you need to fix it
-  def filter(p: Any): LazyList[Any] =
-    ???
+  def filter(p: A => Boolean): LazyList[A] =
+    foldRight(Empty)((a, z) => if p(a) then cons(a, z) else z)
 
   /* Note: The type is given correctly for append, because it is more complex.
    * Try to understand the type. The contsraint 'B >: A' requires that B is a
@@ -148,11 +146,11 @@ enum LazyList[+A]:
    * getOrElse last week, and the type of foldRight this week.
    */
   def append[B >: A](that: => LazyList[B]): LazyList[B] =
-    ???
+    foldRight(that)(cons)
 
   // Note: The type is incorrect, you need to fix it
-  def flatMap(f: Any): LazyList[Any] =
-    ???
+  def flatMap[B](f: A => LazyList[B]): LazyList[B] =
+    foldRight(Empty)((a, z) => f(a).foldRight(z)(cons))
 
   // Exercise 9
   // Type answer here
