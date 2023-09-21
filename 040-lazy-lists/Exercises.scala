@@ -89,7 +89,9 @@ enum LazyList[+A]:
   // Exercise 4
 
   def takeWhile(p: A => Boolean): LazyList[A] =
-    ???
+    this match
+      case Cons(h, t) if p(h()) => cons(h(), t().takeWhile(p))
+      case _                    => Empty
 
   // Exercise 5
 
