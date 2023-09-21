@@ -114,7 +114,11 @@ enum LazyList[+A]:
   // Exercise 6
 
   def takeWhile1(p: A => Boolean): LazyList[A] =
-    ???
+    // Intuition: based on the source of foldRight, the accumulator is
+    // the result of a recursive foldRight via call-by-name - i.e. if
+    // the accumulator is never used, the recursive foldRight is never
+    // evaluated.
+    foldRight(Empty)((a, z) => if p(a) then cons(a, z) else Empty)
 
   // Exercise 7
 
