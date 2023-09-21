@@ -192,7 +192,7 @@ object LazyList:
     cons(n, from(n + 1))
 
   def to(n: Int): LazyList[Int] =
-    cons(n, from(n - 1))
+    cons(n, to(n - 1))
 
   lazy val naturals: LazyList[Int] =
     from(1)
