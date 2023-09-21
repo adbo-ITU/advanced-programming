@@ -155,7 +155,11 @@ enum LazyList[+A]:
   // Exercise 9
   // Type answer here
   //
-  // ...
+  // headOption will take the first item yielded by filter and will not
+  // make filter produce any more elements after that. However, for
+  // non-lazy lists, filter will run through the entire input list, thus
+  // producing an entirely new list, and only after all that will the
+  // first element be taken by headOption.
   //
   // Scroll down to Exercise 10 in the companion object below
 
