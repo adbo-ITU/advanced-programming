@@ -42,11 +42,15 @@ type ValueB = AST[Nothing]
 // The following two functions are now guaranteed to never fail, but
 // unfortunately, the Scala compiler does not see that.
 
-def toIntA(c : ValueA) : Int = c match
-  case AST.ConstInt(x) => x // Warns with "pattern matching may not be exhaustive"
+def toIntA(c : ValueA) : Int = c.toInt()
+  // Using explicit pattern matching:
+  // c match
+  //   case AST.ConstInt(x) => x // Warns with "pattern matching may not be exhaustive"
 
-def toIntB(c : ValueB) : Int = c match
-  case AST.ConstInt(x) => x // Warns with "pattern matching may not be exhaustive"
+def toIntB(c : ValueB) : Int = c.toInt()
+  // Using explicit pattern matching:
+  // c match
+  //   case AST.ConstInt(x) => x // Warns with "pattern matching may not be exhaustive"
 
 // If you are curious, try to implement an evaluation function for
 // each variant. There is a subtle difference between evalA and evalB
