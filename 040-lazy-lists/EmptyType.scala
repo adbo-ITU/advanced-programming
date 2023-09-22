@@ -16,6 +16,8 @@ enum AST[-A]:
   case ConstInt(c : Int) extends AST[Nothing]
   case BinOp[A](a : A, op : Op, lhs : AST[A], rhs : AST[A]) extends AST[A]
 
+  // There are no guarantees here that we are dealing with a ConstInt
+  // value. We choose to throw an exception in non-ConstInt cases.
   def toInt() = this match
     case ConstInt(x) => x
     case _ => throw Exception("Not a constant")
