@@ -166,16 +166,42 @@ enum LazyList[+A]:
   // Exercise 13
 
   def mapUnfold[B](f: A => B): LazyList[B] =
-    ???
+    unfold(this)(l => l.headOption.map(h => (f(h), l.tail)))
 
+  // TODO: don't use pattern matching
   def takeUnfold(n: Int): LazyList[A] =
-    ???
+    unfold((this, n))(s =>
+      s._1.headOption.filter(_ => s._2 > 0).map((_, (s._1.tail, s._2 - 1)))
+    )
+
+    // Alternatively, a for-yield version of takeWhile:
+    // for {
+    //   h <- s._1.headOption
+    //   i = s._2
+    //   if i > 0
+    // } yield (h, (s._1.tail, i - 1))
 
   def takeWhileUnfold(p: A => Boolean): LazyList[A] =
-    ???
+    unfold(this)(s => s.headOption.filter(p).map((_, s.tail)))
+
+    // Alternatively, a pattern matching solution for takeWhileUnfold:
+    // s match
+    //   case Cons(h, t) if p(h()) => Some(h(), t())
+    //   case _                    => None
 
   def zipWith[B >: A, C](ope: (=> B, => B) => C)(bs: LazyList[B]): LazyList[C] =
-    ???
+    unfold((this, bs))(s =>
+      for {
+        ah <- s._1.headOption
+        bh <- s._2.headOption
+        h = ope(ah, bh)
+      } yield (h, (s._1.tail, s._2.tail))
+    )
+
+    // Alternatively, a pattern matching solution for zipWith:
+    // s match
+    //   case (Cons(ah, at), Cons(bh, bt)) => Some(ope(ah(), bh()), (at(), bt()))
+    //   case _                            => None
 
 end LazyList // enum ADT
 
