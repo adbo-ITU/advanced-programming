@@ -219,12 +219,12 @@ object LazyList:
   // Exercise 11
 
   def unfold[A, S](z: S)(f: S => Option[(A, S)]): LazyList[A] =
-    ???
+    f(z).map(r => cons(r._1, unfold(r._2)(f))).getOrElse(Empty)
 
   // Exercise 12
 
-  // Note: The type is incorrect, you need to fix it
-  lazy val fibsUnfold: Any = ???
+  lazy val fibsUnfold: LazyList[Int] =
+    unfold((0, 1))(s => Some(s._1, (s._2, s._1 + s._2)))
 
   // Scroll up for Exercise 13 to the enum
 
