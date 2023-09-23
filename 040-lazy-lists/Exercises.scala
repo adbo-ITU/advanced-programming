@@ -210,9 +210,11 @@ object LazyList:
 
   // Exercise 10
 
-  // Note: The type is incorrect, you need to fix it
-  lazy val fibs: Any =
-    ???
+  lazy val fibs: LazyList[Int] =
+    def nextFibs(prev: Int, prevprev: Int): LazyList[Int] =
+      cons(prev, nextFibs(prevprev, prev + prevprev))
+
+    nextFibs(0, 1)
 
   // Exercise 11
 
