@@ -29,7 +29,8 @@ object RNG:
   // Exercise 1
 
   def nonNegativeInt(rng: RNG): (Int, RNG) =
-    ???
+    val (n, nextRng) = rng.nextInt
+    if n != Int.MinValue then (n.abs, nextRng) else nonNegativeInt(nextRng)
 
   // Exercise 2
 
