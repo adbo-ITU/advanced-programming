@@ -38,13 +38,14 @@ object RNG:
 
   // Exercise 3
 
-  // The return type is broken and needs to be fixed
-  def intDouble(rng: RNG): Any =
-    ???
+  def intDouble(rng: RNG): ((Int, Double), RNG) =
+    val (i, rng1) = nonNegativeInt(rng)
+    val (d, rng2) = double(rng1)
+    ((i, d), rng2)
 
-  // The return type is broken and needs to be fixed
-  def doubleInt(rng: RNG): Any =
-    ???
+  def doubleInt(rng: RNG): ((Double, Int), RNG) =
+    val ((i, d), nextRng) = intDouble(rng)
+    ((d, i), nextRng)
 
   // Exercise 4
 
