@@ -74,7 +74,7 @@ object RNG:
   // Exercise 5
 
   lazy val double2: Rand[Double] =
-    ???
+    map(nonNegativeInt)(_.toDouble / Int.MaxValue)
 
   // Exercise 6
 
