@@ -49,9 +49,13 @@ object RNG:
 
   // Exercise 4
 
-  // The return type is broken and needs to be fixed
-  def ints(size: Int)(rng: RNG): Any =
-    ???
+  def ints(size: Int)(rng: RNG): (List[Int], RNG) =
+    size match
+      case s if s <= 0 => (List.empty, rng)
+      case s =>
+        val (l, rng1) = ints(s - 1)(rng)
+        val (i, rng2) = int(rng1)
+        (i :: l, rng2)
 
   type Rand[+A] = RNG => (A, RNG)
 
