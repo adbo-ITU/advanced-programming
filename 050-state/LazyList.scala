@@ -50,3 +50,6 @@ object LazyList:
     if as.isEmpty 
     then empty
     else cons(as.head, apply(as.tail*))
+
+  def unfold[A, S](z: S)(f: S => Option[(A, S)]): LazyList[A] =
+    f(z).map(r => cons(r._1, unfold(r._2)(f))).getOrElse(Empty)

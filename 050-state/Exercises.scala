@@ -168,7 +168,11 @@ object State:
   // Exercise 10 (stateToLazyList)
 
   def stateToLazyList[S, A](s: State[S, A])(initial: S): LazyList[A] =
-    ???
+    val (a, s1) = s.run(initial)
+    cons(a, stateToLazyList(s)(s1))
+
+    // Alternatively, with unfold:
+    //   LazyList.unfold(s.run(initial))(ss => Some(ss._1, s.run(ss._2)))
 
   // Exercise 11 (lazyInts out of stateToLazyList)
 
