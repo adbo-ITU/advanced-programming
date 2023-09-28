@@ -33,7 +33,8 @@ object RNG:
   // Exercise 2
 
   def double(rng: RNG): (Double, RNG) =
-    ???
+    val (n, nextRng) = nonNegativeInt(rng)
+    (n.toDouble / Int.MaxValue, nextRng)
 
   // Exercise 3
 
