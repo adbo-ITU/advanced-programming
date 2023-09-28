@@ -125,13 +125,20 @@ case class State[S, +A](run: S => (A, S)):
   // Search for the second part (sequence) below
 
   def flatMap[B](f: A => State[S, B]): State[S, B] =
-    ???
+    State { s =>
+      val (a, s1) = run(s)
+      f(a).run(s1)
+    }
 
   def map[B](f: A => B): State[S, B] =
-    ???
+    flatMap(s => unit(f(s)))
 
   def map2[B, C](sb: State[S, B])(f: (A, B) => C): State[S, C] =
-    ???
+    State { s =>
+      val (a, s1) = run(s)
+      val (b, s2) = sb.run(s1)
+      (f(a, b), s2)
+    }
 
 object State:
 
@@ -154,7 +161,7 @@ object State:
   // Exercise 9 (sequence, continued)
 
   def sequence[S, A](sas: List[State[S, A]]): State[S, List[A]] =
-    ???
+    sas.foldRight[State[S, List[A]]](unit(List.empty))(_.map2(_)(_ :: _))
 
   import adpro.lazyList.LazyList
 
