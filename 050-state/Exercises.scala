@@ -101,10 +101,19 @@ object RNG:
   // Exercise 8
 
   def flatMap[A, B](f: Rand[A])(g: A => Rand[B]): Rand[B] =
-    ???
+    rng => {
+      val (a, rng1) = f(rng)
+      val (b, rng2) = g(a)(rng1)
+      (b, rng2)
+    }
 
+  // The obvious way to write this function would just be:
+  //   map(nonNegativeInt)(_ % bound)
+  // or
+  //   map(double)(d => (d * bound).toInt)
+  // but we have to use flatMap..
   def nonNegativeLessThan(bound: Int): Rand[Int] =
-    ???
+    flatMap(nonNegativeInt)(i => unit(i % bound))
 
 end RNG
 
