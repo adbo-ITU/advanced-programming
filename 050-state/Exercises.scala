@@ -50,12 +50,17 @@ object RNG:
   // Exercise 4
 
   def ints(size: Int)(rng: RNG): (List[Int], RNG) =
-    size match
-      case s if s <= 0 => (List.empty, rng)
-      case s =>
-        val (l, rng1) = ints(s - 1)(rng)
-        val (i, rng2) = int(rng1)
-        (i :: l, rng2)
+    def aux(size: Int)(rng: RNG): (List[Int], RNG) =
+      size match
+        case s if s <= 0 => (List.empty, rng)
+        case s =>
+          val (l, rng1) = aux(s - 1)(rng)
+          val (i, rng2) = int(rng1)
+          (i :: l, rng2)
+
+    // Reverse so that it is compatible with exercise 7
+    val (l, rng1) = aux(size)(rng)
+    (l.reverse, rng1)
 
   type Rand[+A] = RNG => (A, RNG)
 
@@ -88,10 +93,10 @@ object RNG:
   // Exercise 7
 
   def sequence[A](ras: List[Rand[A]]): Rand[List[A]] =
-    ???
+    ras.foldRight[Rand[List[A]]](unit(List.empty))(map2(_, _)(_ :: _))
 
   def ints2(size: Int): Rand[List[Int]] =
-    ???
+    sequence(List.fill(size)(int))
 
   // Exercise 8
 
