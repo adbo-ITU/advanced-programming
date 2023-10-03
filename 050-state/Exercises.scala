@@ -168,7 +168,7 @@ object State:
   // Exercise 10 (stateToLazyList)
 
   def stateToLazyList[S, A](s: State[S, A])(initial: S): LazyList[A] =
-    val (a, s1) = s.run(initial)
+    lazy val (a, s1) = s.run(initial)
     cons(a, stateToLazyList(s)(s1))
 
     // Alternatively, with unfold:
@@ -177,8 +177,7 @@ object State:
   // Exercise 11 (lazyInts out of stateToLazyList)
 
   def lazyInts(rng: RNG): LazyList[Int] =
-    val s = State[RNG, Int](_.nextInt)
-    stateToLazyList(s)(rng)
+    stateToLazyList[RNG, Int](State(_.nextInt))(rng)
 
   lazy val tenStrictInts: List[Int] =
     lazyInts(RNG.SimpleRNG(42)).take(10).toList
