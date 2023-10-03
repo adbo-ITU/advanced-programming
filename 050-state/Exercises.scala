@@ -177,9 +177,10 @@ object State:
   // Exercise 11 (lazyInts out of stateToLazyList)
 
   def lazyInts(rng: RNG): LazyList[Int] =
-    ???
+    val s = State[RNG, Int](_.nextInt)
+    stateToLazyList(s)(rng)
 
   lazy val tenStrictInts: List[Int] =
-    ???
+    lazyInts(RNG.SimpleRNG(42)).take(10).toList
 
 end State
