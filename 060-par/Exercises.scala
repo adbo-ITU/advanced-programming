@@ -110,7 +110,19 @@ object Par:
   // Exercise 3
   
   /* Write the answer here in a comment:
-   * ...
+   *
+   * I would ensure that the function properly composes the given Par
+   * and does not execute the map function logic before being instructed
+   * to run in parallel.
+   *
+   * Test case could be to have a side effect (such as print) within the
+   * mapper function f, use map (but NOT run it), check that the side
+   * effect has not been applied, then run the Par, and then check that
+   * it has been applied.
+   *
+   * Alternatively, you could check that it is being run in parallel and
+   * not blocking the current thread. For example, run an expensive task,
+   * then make sure the main thread can keep going while map is running.
    */
   
   // Exercise 4
