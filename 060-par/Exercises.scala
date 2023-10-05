@@ -96,13 +96,16 @@ object Par:
   // Exercise 1
   
   /* Write the answer here in a comment 
-   * ...
+   *
+   * In the book's model of Par, if unit was strict, it would compute
+   * the value of a in the current thread, not in parallel. Thus, the
+   * strict unit would be a sequential computation.
    */
   
   // Exercise 2 
   
   def asyncF[A, B](f: A => B): A => Par[B] = 
-    ???
+    a => lazyUnit(f(a))
   
   // Exercise 3
   
