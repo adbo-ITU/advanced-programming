@@ -124,7 +124,9 @@ object Par:
   // Exercise 4
 
   def sequence[A](ps: List[Par[A]]): Par[List[A]] =
-    ???
+    ps.foldRight[Par[List[A]]](unit(Nil))((pa, pz) =>
+      pz.map2(pa)((z, a) => a :: z)
+    )
 
   /* This is shown in the book: */
   def parMap[A, B](as: List[A])(f: A => B): Par[List[B]] =
