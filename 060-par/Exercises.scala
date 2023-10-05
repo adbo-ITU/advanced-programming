@@ -8,6 +8,15 @@ import java.util.concurrent.{Executors, ExecutorService, Callable}
 import scala.language.implicitConversions
 import scala.io.Source
 
+
+def time[A](f: => A) = {
+  val s = System.nanoTime
+  val ret = f
+  println("time: "+(System.nanoTime-s)/1e6+"ms")
+  ret
+}
+
+
 /* This non-blocking  version of Future (different from
  * java.util.concurrent) takes a continuation instead of returning a
  * value, and calls it when ready.
@@ -135,10 +144,26 @@ object Par:
   // Exercise 5
 
   def wget(uris: String*): List[String] =
-    ???
+    val pool = java.util.concurrent.Executors.newFixedThreadPool(uris.size)
+
+    val results = parMap(uris.toList)(uri =>
+      scala.io.Source.fromURL(uri)("ISO-8859-1").mkString
+    ).run(pool)
+
+    pool.shutdown()
+    results
 
   /* Write your explanation in English here:
-   * ...
+   *
+   * My solution obtains concurrency by using parMap. Inside parMap, each
+   * item of the list is turned into an parallel task (via lazyUnit),
+   * meaning the mappers (sending the requests) are running in parallel
+   * and not blocking each other, assuming enouch threads are available
+   * in the pool.
+   *
+   * Parallel runs in 320 ms most of the time. Non-parallel is 420-700ms. So
+   * definitely a difference. Test:
+   *   Par.wget("https://www.dr.dk", "https://www.itu.dk", "https://www.google.com")
    */
 
   // Exercise 6
