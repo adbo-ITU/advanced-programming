@@ -56,7 +56,14 @@ extension [A](pa: Par[A])
 
   // Exercise 8
 
-  def chooser[B](f: A => Par[B]): Par[B] = ???
+  def chooser[B](f: A => Par[B]): Par[B] =
+    es =>
+      k => {
+        val a = pa.run(es)
+        val pb = f(a)
+        val b = pb.run(es)
+        k(b)
+      }
 
   // Exercise 9 continues in the Par object, in the bottom of the file
 
@@ -169,15 +176,21 @@ object Par:
   // Note: The solution from the text book does not apply immediately.
   // It has to be adapted to the non-blocking representation of Par and
   // Future that we are using in this chapter.
-  def choiceN[A](pn: Par[Int])(choices: List[Par[A]]): Par[A] =
+  def choiceNOld[A](pn: Par[Int])(choices: List[Par[A]]): Par[A] =
     // I WANT this:
     //  pn.flatMap(n => choices(n))
     // But we have no flatMap.
     // This is incorrect, I think, since it runs all computations:
     pn.map2(sequence(choices))((n, c) => c(n))
 
+  def choiceN[A](pn: Par[Int])(choices: List[Par[A]]): Par[A] =
+    pn.chooser(n => choices(n))
+
+  def choiceOld[A](pb: Par[Boolean])(t: Par[A], f: Par[A]): Par[A] =
+    choiceNOld(pb.map(if _ then 0 else 1))(List(t, f))
+
   def choice[A](pb: Par[Boolean])(t: Par[A], f: Par[A]): Par[A] =
-    choiceN(pb.map(if _ then 0 else 1))(List(t, f))
+    pb.chooser(if _ then t else f)
 
   // Exercise 8 is found above, in the extension methods of Par[A]
   // Come back here when done with Exercise 8.
