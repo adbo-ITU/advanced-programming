@@ -198,10 +198,10 @@ object Par:
   // Exercise 9
 
   def join[A](p: Par[Par[A]]): Par[A] =
-    ???
+    p.chooser(identity)
 
   def chooser[A, B](p: Par[A])(f: A => Par[B]): Par[B] =
-    ???
+    join(p.map(f))
 
 end Par
 
