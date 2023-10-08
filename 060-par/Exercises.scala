@@ -207,22 +207,25 @@ end Par
 
 // Exercise 10
 
-// The types here are broken, and you need to fix them
-// replace THIS with a meaningful name
-extension (THIS: Any)
-  def join: Any =
-    ???
+extension [A](ppa: Par[Par[A]])
+  def join: Par[A] =
+    Par.join(ppa)
 
 // The types here are broken, and you need to fix them
-extension (THIS: Any)
-  def choiceN(SOMETHING: Any): Any =
-    ???
+extension (pn: Par[Int])
+  def choiceN[A](choices: List[Par[A]]): Par[A] =
+    Par.choiceN(pn)(choices)
 
-// The types here are broken, and you need to fix them
-extension (THIS: Any)
-  def choice(SOMETHING: Any, ANOTHERTHING: Any) =
-    ???
+extension (pb: Par[Boolean])
+  def choice[A](t: Par[A], f: Par[A]): Par[A] =
+    Par.choice(pb)(t, f)
 
 /* Write your answer in English here:
- * ....
+ *
+ * The types that are extended are different, so they must be in different
+ * extension method blocks.
+ *
+ * They cannot share the same generic A, because then A would have to be
+ * both Int and Boolean simultaneously to fulfil the requirements for
+ * choice and choiceN.
  */
