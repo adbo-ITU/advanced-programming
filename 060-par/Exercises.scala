@@ -8,15 +8,6 @@ import java.util.concurrent.{Executors, ExecutorService, Callable}
 import scala.language.implicitConversions
 import scala.io.Source
 
-
-def time[A](f: => A) = {
-  val s = System.nanoTime
-  val ret = f
-  println("time: "+(System.nanoTime-s)/1e6+"ms")
-  ret
-}
-
-
 /* This non-blocking  version of Future (different from
  * java.util.concurrent) takes a continuation instead of returning a
  * value, and calls it when ready.
