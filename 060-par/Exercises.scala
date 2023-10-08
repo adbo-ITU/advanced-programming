@@ -170,10 +170,14 @@ object Par:
   // It has to be adapted to the non-blocking representation of Par and
   // Future that we are using in this chapter.
   def choiceN[A](pn: Par[Int])(choices: List[Par[A]]): Par[A] =
-    ???
+    // I WANT this:
+    //  pn.flatMap(n => choices(n))
+    // But we have no flatMap.
+    // This is incorrect, I think, since it runs all computations:
+    pn.map2(sequence(choices))((n, c) => c(n))
 
   def choice[A](pb: Par[Boolean])(t: Par[A], f: Par[A]): Par[A] =
-    ???
+    choiceN(pb.map(if _ then 0 else 1))(List(t, f))
 
   // Exercise 8 is found above, in the extension methods of Par[A]
   // Come back here when done with Exercise 8.
