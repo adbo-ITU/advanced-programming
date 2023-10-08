@@ -160,7 +160,9 @@ object Par:
   // Exercise 6
 
   def parFilter[A](as: List[A])(f: A => Boolean): Par[List[A]] =
-    ???
+    as.foldRight[Par[List[A]]](unit(Nil))((a, pz) =>
+      pz.map2(asyncF(f)(a))((z, r) => if r then a :: z else z)
+    )
 
   // Exercise 7
 
