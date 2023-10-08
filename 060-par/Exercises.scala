@@ -1,5 +1,7 @@
 // Advanced Programming, A. Wąsowski, IT University of Copenhagen
 // Based on Functional Programming in Scala, 2nd Edition
+//
+// "spiderman": in advance, thank you for the feedback :)
 
 package adpro.par
 
