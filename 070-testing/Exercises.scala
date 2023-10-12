@@ -94,6 +94,16 @@ object LazyListSpec extends org.scalacheck.Properties("testing"):
 
   // Exercise 5
 
+  property(
+    "Ex05.01: l.take(n).take(n) == l.take(n) for any lazy list s and any n"
+  ) =
+    given Arbitrary[LazyList[Int]] = Arbitrary(genLazyList[Int])
+    given Arbitrary[Int] = Arbitrary(genNonNegative[Int])
+
+    forAll { (l: LazyList[Int], n: Int) =>
+      l.take(n).take(n).toList == l.take(n).toList
+    }
+
   // Exercise 6
 
   // Exercise 7
