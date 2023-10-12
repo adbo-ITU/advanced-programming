@@ -23,6 +23,12 @@ def list2lazyList[A](la: List[A]): LazyList[A] =
 def genNonEmptyLazyList[A](using Arbitrary[A]): Gen[LazyList[A]] =
   for la <- arbitrary[List[A]].suchThat { _.nonEmpty } yield list2lazyList(la)
 
+def genLazyList[A](using Arbitrary[A]): Gen[LazyList[A]] =
+  for la <- arbitrary[List[A]] yield list2lazyList(la)
+
+def genNonNegative[A](using Arbitrary[A]): Gen[Int] =
+  arbitrary[Int].suchThat(_ != Int.MinValue).map(_.abs)
+
 def genLazyListWithSize[A](using Arbitrary[A]): Gen[(Int, LazyList[A])] =
   for {
     n <- Gen.choose(0, 1000)
@@ -105,6 +111,18 @@ object LazyListSpec extends org.scalacheck.Properties("testing"):
     }
 
   // Exercise 6
+
+  property(
+    "Ex06.01: l.drop(n).drop(m) == l.drop(n+m) for any n,m."
+  ) =
+    given Arbitrary[LazyList[Int]] = Arbitrary(genLazyList[Int])
+    given Arbitrary[Int] = Arbitrary(genNonNegative[Int])
+
+    forAll { (l: LazyList[Int], n: Int, m: Int) =>
+      // We don't want to deal with integer overflow here, so make sure that
+      // the sum doesn't overflow
+      (n + m >= 0) ==> (l.drop(n).drop(m).toList == l.drop(n + m).toList)
+    }
 
   // Exercise 7
 
