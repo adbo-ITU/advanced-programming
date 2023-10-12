@@ -65,6 +65,16 @@ object LazyListSpec extends org.scalacheck.Properties("testing"):
 
   // Exercise 3
 
+  property(
+    "Ex03.01: take does not force any heads nor any tails of the lazy list it manipulates"
+  ) =
+    given Arbitrary[LazyList[Int]] = Arbitrary(genNonEmptyLazyList[Int])
+
+    forAll { (s: LazyList[Int], n: Int) =>
+      cons(???, cons(???, s)).take(n)
+      true
+    }
+
   // Exercise 4
 
   // Exercise 5
