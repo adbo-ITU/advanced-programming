@@ -23,6 +23,12 @@ def list2lazyList[A](la: List[A]): LazyList[A] =
 def genNonEmptyLazyList[A](using Arbitrary[A]): Gen[LazyList[A]] =
   for la <- arbitrary[List[A]].suchThat { _.nonEmpty } yield list2lazyList(la)
 
+def genLazyListWithSize[A](using Arbitrary[A]): Gen[(Int, LazyList[A])] =
+  for {
+    n <- Gen.choose(0, 1000)
+    la <- Gen.listOfN(n, arbitrary[A])
+  } yield (n, list2lazyList(la))
+
 /** Generate an infinite lazy list of A values.
   *
   * This lazy list is infinite if the implicit generator for A never fails. The
@@ -76,6 +82,15 @@ object LazyListSpec extends org.scalacheck.Properties("testing"):
     }
 
   // Exercise 4
+
+  property("Ex04.01: take(n) does not force the (n+1)st head ever") =
+    given Arbitrary[(Int, LazyList[Int])] = Arbitrary(genLazyListWithSize)
+    given Arbitrary[LazyList[Int]] = Arbitrary(genNonEmptyLazyList[Int])
+
+    forAll { (ns: (Int, LazyList[Int]), other: LazyList[Int]) =>
+      val (n, s) = ns
+      s.append(other.map(_ => ???)).take(n).toList == s.toList
+    }
 
   // Exercise 5
 
