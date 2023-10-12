@@ -58,6 +58,11 @@ object LazyListSpec extends org.scalacheck.Properties("testing"):
 
   // Exercise 2
 
+  property("Ex02.01: headOption does not force the tail of a lazy list") =
+    forAll { (n: Int) =>
+      cons(n, ???).headOption == Some(n)
+    }
+
   // Exercise 3
 
   // Exercise 4
