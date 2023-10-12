@@ -126,6 +126,22 @@ object LazyListSpec extends org.scalacheck.Properties("testing"):
 
   // Exercise 7
 
+  property(
+    "Ex07.01: l.drop(n) does not force any of the dropped elements (heads)"
+  ) =
+    given Arbitrary[(Int, LazyList[Int])] = Arbitrary(genLazyListWithSize[Int])
+
+    forAll { (nl1: (Int, LazyList[Int]), nl2: (Int, LazyList[Int])) =>
+      val (n1, l1) = nl1
+      val l2 = nl2._2
+
+      def prependFailWhenForced[A](n: Int, acc: LazyList[A]): LazyList[A] =
+        if n <= 0 then acc
+        else prependFailWhenForced(n - 1, cons(???, acc))
+
+      prependFailWhenForced(n1, l2).drop(n1).toList == l2.toList
+    }
+
   // Exercise 8
 
   // Exercise 9
