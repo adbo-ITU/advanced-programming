@@ -155,4 +155,14 @@ object LazyListSpec extends org.scalacheck.Properties("testing"):
 
   // Exercise 9
 
+  property(
+    "Ex09.01: map terminates on infinite lazy lists"
+  ) =
+    given Arbitrary[LazyList[Int]] = Arbitrary(infiniteLazyList[Int])
+
+    forAll { (l: LazyList[Int]) =>
+      l.map(identity)
+      true
+    }
+
   // Exercise 10
