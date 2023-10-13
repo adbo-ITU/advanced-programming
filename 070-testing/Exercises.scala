@@ -144,6 +144,15 @@ object LazyListSpec extends org.scalacheck.Properties("testing"):
 
   // Exercise 8
 
+  property(
+    "Ex08.01: l.map(identity).toList == l.toList"
+  ) =
+    given Arbitrary[LazyList[Int]] = Arbitrary(genLazyList[Int])
+
+    forAll { (l: LazyList[Int]) =>
+      l.map(identity).toList == l.toList
+    }
+
   // Exercise 9
 
   // Exercise 10
