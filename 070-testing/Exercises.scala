@@ -7,9 +7,9 @@ import org.scalacheck.*
 import org.scalacheck.Prop.*
 import org.scalacheck.Arbitrary.arbitrary
 
-// import lazyList00.* // uncomment to test the book laziness solution implementation
+import lazyList00.* // uncomment to test the book laziness solution implementation
 // import lazyList01.* // uncomment to test the broken headOption implementation
-import lazyList02.* // uncomment to test another version
+// import lazyList02.* // uncomment to test another version
 
 /* Generators and helper functions */
 
@@ -166,3 +166,27 @@ object LazyListSpec extends org.scalacheck.Properties("testing"):
     }
 
   // Exercise 10
+
+  property(
+    "Ex10.01: a.append(b) adds all elements of b after a"
+  ) =
+    given Arbitrary[LazyList[Int]] = Arbitrary(genLazyList[Int])
+
+    forAll { (a: LazyList[Int], b: LazyList[Int]) =>
+      a.append(b).toList == (a.toList ::: b.toList)
+    }
+
+  property(
+    "Ex10.02: a.append(b) does not force any elements of b"
+  ) =
+    given Arbitrary[LazyList[Int]] = Arbitrary(genLazyList[Int])
+
+    forAll { (a: LazyList[Int], b: LazyList[Int]) =>
+      a.append(b.map(_ => ???))
+
+      // Would also expect the following to work, but foldRight is eager in our
+      // LazyList implementation for some reason..
+      //   a.map(_ => ???).append(b)
+
+      true
+    }
