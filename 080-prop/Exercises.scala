@@ -144,20 +144,20 @@ object Exercise_12:
   // Choose one of the following templates, but note only listOfN and
   // listOf are tested (so rename if you use another than the first)
 
-  def listOfN[A: Gen](n: Int): Gen[List[A]] =
+  def listOfN__[A: Gen](n: Int): Gen[List[A]] =
     ???
 
   def listOfN_[A: Gen]: Int => Gen[List[A]] =
     ???
 
-  def listOfN__[A](n: Int)(using genA: Gen[A]): Gen[List[A]] =
-    ???
+  def listOfN[A](n: Int)(using genA: Gen[A]): Gen[List[A]] =
+    genA.listOfN(n)
 
   // Choose one of the following templates, but note only listOfN and
   // listOf are tested (so rename if you use another than the first)
 
   def listOf[A: Gen](using genInt: Gen[Int]): Gen[List[A]] =
-    ???
+    genInt.flatMap(listOfN)
 
   def listOf_[A](using genInt: Gen[Int], genA: Gen[A]): Gen[List[A]] =
     ???
