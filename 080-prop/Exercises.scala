@@ -13,8 +13,8 @@ lazy val rng1: RNG = RNG.Simple(TODO)
 
 // Exercise 2
 
-lazy val (x, rng2): (Int, RNG) = ???
-lazy val y = ???
+lazy val (x, rng2): (Int, RNG) = rng1.nextInt
+lazy val y = rng2.nextInt._1
 
 // Exercise 3
 
