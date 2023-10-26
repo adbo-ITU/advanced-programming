@@ -229,7 +229,7 @@ opaque type SGen[+A] = Int => Gen[A]
 
 extension [A](self: Gen[A])
   def unsized: SGen[A] =
-    ???
+    i => self
 
 // Exercise 15
 
