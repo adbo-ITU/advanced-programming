@@ -92,8 +92,16 @@ object Gen:
       State.sequence(List.fill(n)(self))
 
   // Exercise 8
-
-  // Write here ... ???
+  //
+  // Because of ergonomics, I'd assume. Functionally it doesn't matter since we
+  // could have written this as a static method:
+  //
+  // def listOfN[A](gen: Gen[A], n: Int): Gen[List[A]] =
+  //   State.sequence(List.fill(n)(gen))
+  //
+  // But with the extension method, we can do Gen.double.listOfN(n) rather than
+  // Gen.listOfN(Gen.int, n). It's also more standard to have extension methods
+  // when the method depends on some existing instance of the type - i.e. self.
 
   // Exercise 9
 
