@@ -297,10 +297,16 @@ object Exercise_16:
   // allow the teachers to test them with different mutants of `minimum`.
 
   def p1Min(minimum: List[Int] => Int): Prop =
-    ???
+    Prop.forAll(nonEmptyList) { (l: List[Int]) =>
+      val min = minimum(l)
+      l.forall(_ >= min)
+    }
 
   def p2Min(minimum: List[Int] => Int): Prop =
-    ???
+    Prop.forAll(nonEmptyList) { (l: List[Int]) =>
+      val min = minimum(l)
+      l.exists(_ == min)
+    }
 
 end Exercise_16
 
