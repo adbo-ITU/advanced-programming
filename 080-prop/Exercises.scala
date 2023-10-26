@@ -235,7 +235,7 @@ extension [A](self: Gen[A])
 
 extension [A](self: Gen[A])
   def list: SGen[List[A]] =
-    ???
+    i => self.listOfN(i)
 
 // A sized implementation of prop, takes MaxSize to generate
 // test cases of given size.
