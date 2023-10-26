@@ -9,7 +9,7 @@ val TODO = 42
 
 // Exercise 1
 
-lazy val rng1: RNG = ???
+lazy val rng1: RNG = RNG.Simple(TODO)
 
 // Exercise 2
 
