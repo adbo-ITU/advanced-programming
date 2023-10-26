@@ -4,7 +4,6 @@
 package adpro.prop
 
 import adpro.state.*
-import adpro.state.RNG.nonNegativeInt
 
 val TODO = 42
 
@@ -73,20 +72,20 @@ object Gen:
   // Exercise 5
 
   def choose(start: Int, stopExclusive: Int): Gen[Int] =
-    State(nonNegativeInt).map(i =>
+    State(RNG.nonNegativeInt).map(i =>
       (stopExclusive - start) % stopExclusive + start
     )
 
   // Exercise 6
 
   def unit[A](a: => A): Gen[A] =
-    ???
+    State.unit(a)
 
   def boolean: Gen[Boolean] =
-    ???
+    State(RNG.boolean)
 
   def double: Gen[Double] =
-    ???
+    State(RNG.map2(RNG.int, RNG.double)(_ + _))
 
   // Exercise 7
 
