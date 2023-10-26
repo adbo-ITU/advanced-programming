@@ -129,7 +129,7 @@ object Gen:
 
   extension [A](self: Gen[A])
     def union(that: Gen[A]): Gen[A] =
-      ???
+      Gen.boolean.flatMap(if _ then self else that)
 
 end Gen
 
