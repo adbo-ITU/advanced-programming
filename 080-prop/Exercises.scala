@@ -211,9 +211,16 @@ def forAll[A](as: Gen[A])(f: A => Boolean): Prop =
 def forAllNotSized[A] = forAll[A]
 
 extension (self: Prop)
-  infix def &&(that: Prop): Prop = (maxSize, tcs, rng) => ???
+  infix def &&(that: Prop): Prop = (maxSize, tcs, rng) =>
+    (self(maxSize, tcs, rng), that(maxSize, tcs, rng)) match
+      case (r1, r2) if r1.isFalsified => r1
+      case (r1, r2) if r2.isFalsified => r2
+      case _                          => Passed
 
-  infix def ||(that: Prop): Prop = (maxSize, tcs, rng) => ???
+  infix def ||(that: Prop): Prop = (maxSize, tcs, rng) =>
+    (self(maxSize, tcs, rng), that(maxSize, tcs, rng)) match
+      case (r1, r2) if !r1.isFalsified => r1
+      case (r1, r2)                    => r2
 
 // Exercise 14
 
