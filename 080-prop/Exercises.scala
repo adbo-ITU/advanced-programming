@@ -123,7 +123,7 @@ object Gen:
 
   extension [A](self: Gen[A])
     def listOf(size: Gen[Int]): Gen[List[A]] =
-      ???
+      size.flatMap(self.listOfN)
 
   // Exercise 11
 
