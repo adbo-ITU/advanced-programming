@@ -54,7 +54,8 @@ object Exercise_4:
     def check: Boolean
 
     infix def && (that: Prop): Prop =
-      ???
+      new Prop:
+        def check = self.check && that.check
 
 end Exercise_4
 
