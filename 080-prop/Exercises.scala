@@ -4,6 +4,7 @@
 package adpro.prop
 
 import adpro.state.*
+import adpro.state.RNG.nonNegativeInt
 
 val TODO = 42
 
@@ -69,8 +70,9 @@ object Gen:
       LazyList.unfold[A,RNG](rng)(rng => Some(g.run(rng)))
 
   // Exercise 5
+
   def choose (start: Int, stopExclusive: Int): Gen[Int] =
-    ???
+    State(nonNegativeInt).map(i => (stopExclusive - start) % stopExclusive + start)
 
   // Exercise 6
 
@@ -99,7 +101,7 @@ object Gen:
   extension [A](self: Gen[A])
 
     def flatMap[B](f: A => Gen[B]): Gen[B] =
-      ???
+      ??? // todo: rerun ex 05 tests
 
     // It will be convenient to also have map (uses flatMap)
     def map[B](f: A => B): Gen[B] = 
