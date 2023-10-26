@@ -72,9 +72,7 @@ object Gen:
   // Exercise 5
 
   def choose(start: Int, stopExclusive: Int): Gen[Int] =
-    State(RNG.nonNegativeInt).map(i =>
-      (stopExclusive - start) % stopExclusive + start
-    )
+    State(RNG.nonNegativeInt).map(i => i % (stopExclusive - start) + start)
 
   // Exercise 6
 
@@ -91,7 +89,7 @@ object Gen:
 
   extension [A](self: Gen[A])
     def listOfN(n: Int): Gen[List[A]] =
-      ???
+      State.sequence(List.fill(n)(self))
 
   // Exercise 8
 
@@ -102,7 +100,12 @@ object Gen:
   extension [A](self: Gen[A])
 
     def flatMap[B](f: A => Gen[B]): Gen[B] =
-      ??? // todo: rerun ex 05 tests
+      // I don't know how to delegate the flatMap method when it has the same
+      // name on State
+      State((rng0: RNG) =>
+        val (a, rng1) = self.run(rng0)
+        f(a).run(rng1)
+      )
 
     // It will be convenient to also have map (uses flatMap)
     def map[B](f: A => B): Gen[B] =
