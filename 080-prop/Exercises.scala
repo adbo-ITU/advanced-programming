@@ -31,10 +31,16 @@ object Exercise_3:
   // allow the teachers to test them with different mutants of `minimum`.
   
   def p1Min (minimum: List[Int] => Int): org.scalacheck.Prop = 
-    ??? 
+    org.scalacheck.Prop.forAll(intList) { (l: List[Int]) =>
+      val min = minimum(l)
+      l.forall(_ >= min)
+    }
 
   def p2Min (minimum: List[Int] => Int): org.scalacheck.Prop = 
-    ???
+    org.scalacheck.Prop.forAll(intList) { (l: List[Int]) =>
+      val min = minimum(l)
+      l.exists(_ == min)
+    }
 
 end Exercise_3
 
