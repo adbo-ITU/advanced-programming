@@ -538,16 +538,18 @@ class JSONParser[ParseError, Parser[+_]](P: Parsers[ParseError, Parser]):
   // Exercise 13
 
   lazy val jnull: Parser[JSON] =
-    ???
+    string("null") |* succeed(JNull)
 
   lazy val jbool: Parser[JSON] =
-    ???
+    (string("true") |* succeed(JBool(true))) | (string("false") |* succeed(
+      JBool(false)
+    ))
 
   lazy val jstring: Parser[JString] =
-    ???
+    QUOTED.map(JString(_))
 
   lazy val jnumber: Parser[JNumber] =
-    ???
+    DOUBLE.map(JNumber(_))
 
   // Exercise 13
 
