@@ -244,7 +244,7 @@ trait Parsers[ParseError, Parser[+_]]:
   // Exercise 7
 
   def digitTimesA: Parser[Int] =
-    ???
+    regex("[0-9]".r).map(_.toInt).flatMap(d => char('a').listOfN(d).map(_ => d))
 
   // For Exercise 8 read the code below until you find it.
 
