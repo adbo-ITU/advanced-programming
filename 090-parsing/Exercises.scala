@@ -209,7 +209,7 @@ trait Parsers[ParseError, Parser[+_]]:
 
   extension [A](p: Parser[A])
     def many: Parser[List[A]] =
-      p.map2(p.many)((a, b) => a :: b).or(succeed(List())).map(_.reverse)
+      p.map2(p.many)(_ :: _).or(succeed(List())).map(_.reverse)
 
   // Exercise 3
 
@@ -236,8 +236,10 @@ trait Parsers[ParseError, Parser[+_]]:
   // Exercise 6
 
   extension [A](p: Parser[A])
+    // No order was specified, so I haven't reversed like earlier
     def listOfN(n: Int): Parser[List[A]] =
-      ???
+      if n <= 0 then succeed(List())
+      else p.map2(p.listOfN(n - 1))(_ :: _)
 
   // Exercise 7
 
