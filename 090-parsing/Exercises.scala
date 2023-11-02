@@ -226,10 +226,12 @@ trait Parsers[ParseError, Parser[+_]]:
   // Exercise 5
 
   extension [A](p: Parser[A])
+    // I assume we follow the same semantics as `many` where the last
+    // element of the list is the first match
     def many1: Parser[List[A]] =
-      ???
+      p.product(p.many).map(a => a._2 ::: List(a._1))
 
-  // Write here ...
+  // It's an extension method so `many1` can be used on any parser.
 
   // Exercise 6
 
