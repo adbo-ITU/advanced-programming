@@ -485,7 +485,10 @@ object Sliceable extends Parsers[ParseError, Parser]:
 
   extension [A](p: Parser[A])
     def or(p2: => Parser[A]): Parser[A] =
-      ???
+      s =>
+        p(s) match
+          case Failure(_, _) => p2(s)
+          case succ          => succ
 
   // Exercise 10
 
