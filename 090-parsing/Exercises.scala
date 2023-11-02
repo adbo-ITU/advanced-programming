@@ -578,6 +578,20 @@ class JSONParser[ParseError, Parser[+_]](P: Parsers[ParseError, Parser]):
     )
 
   // Exercise 14 (no code)
+  //
+  // Samples:
+  //
+  //   Expect success:
+  //   scala> JP.json.run("[]")
+  //   val res0: .. = Right(JArray(Vector()))
+  //
+  //   Expect success:
+  //   scala> JP.json.run("[true, 20.0]")
+  //   val res1: .. = Right(JArray(Vector(JBool(true), JNumber(20.0))))
+  //
+  //   Expect failure:
+  //   scala> JP.json.run("[true, 20.0,]")
+  //   val res2: .. = Left(...)
 
   // Exercise 15
   //
