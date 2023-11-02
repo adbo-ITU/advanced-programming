@@ -556,9 +556,9 @@ class JSONParser[ParseError, Parser[+_]](P: Parsers[ParseError, Parser]):
     ws.* |* p *| ws.*
 
   private def commaSeparated[A](p: Parser[A]): Parser[List[A]] =
-    val first = wsSurround(p)
+    val first = wsSurround(p).map(List(_)) | succeed(List())
     val rest = wsSurround(char(',') |* ws.* |* p).*
-    first.map2(rest)(_ :: _)
+    (first ** rest).map(_ ::: _)
 
   lazy val jarray: Parser[JArray] =
     (char('[') |* commaSeparated(json) *| char(']')).map(l =>
