@@ -492,7 +492,10 @@ object Sliceable extends Parsers[ParseError, Parser]:
 
   // Exercise 10
 
-  def regex(r: Regex): Parser[String] = (s: ParseState) => ???
+  def regex(r: Regex): Parser[String] = (s: ParseState) =>
+    r.findPrefixOf(s.input)
+      .map(m => if s.isSliced then Slice(m.size) else Success(m, m.size))
+      .getOrElse(Failure(s.loc.toError(s"did not match regex $r"), true))
 
 end Sliceable
 
