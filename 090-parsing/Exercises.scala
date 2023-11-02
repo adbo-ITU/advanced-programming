@@ -424,7 +424,7 @@ object Sliceable extends Parsers[ParseError, Parser]:
 
   /** Consume no characters and succeed with the given value */
   def succeed[A](a: A): Parser[A] =
-    ???
+    _ => Success(a, 0)
 
   // For Exercise 9 continue reading below
 
