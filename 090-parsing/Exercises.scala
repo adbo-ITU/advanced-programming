@@ -181,16 +181,16 @@ trait Parsers[ParseError, Parser[+_]]:
 
   extension [A](p1: Parser[A])
     def map2[B, C](p2: => Parser[B])(f: (A, B) => C): Parser[C] =
-      ???
+      p1.flatMap { a => p2.map { b => f(a, b) } }
 
     def product[B](p2: => Parser[B]): Parser[(A, B)] =
-      ???
+      p1.map2(p2)((a, b) => (a, b))
 
     // Write here:
     //
-    // (1) ...
+    // (1) It's already defined on the extension block.
     //
-    // (2) ...
+    // (2) So the combinators that make up p2 do not need to be built unless required.
 
     def **[B](p2: => Parser[B]): Parser[(A, B)] =
       p1.product(p2)
