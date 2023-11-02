@@ -219,7 +219,7 @@ trait Parsers[ParseError, Parser[+_]]:
 
   // A better name would be: howManyA
   def manyA: Parser[Int] =
-    ???
+    char('a').many.map(_.size)
 
   // Exercise 5
 
