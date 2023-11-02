@@ -521,14 +521,19 @@ class JSONParser[ParseError, Parser[+_]](P: Parsers[ParseError, Parser]):
 
   // Exercise 11
 
+  // Thank you Andrzej for letting me steal this from the slides
+  // And thanks to aljb for discussing some of these.
+
   lazy val QUOTED: Parser[String] =
-    ???
+    char('"') |* regex("""[^"]*""".r) *| char('"')
+
+    // Alternative: regex(""""([^"]*)"""".r).map { _.drop(1).dropRight(1) }
 
   lazy val DOUBLE: Parser[Double] =
-    ???
+    regex("""(\+|-)?[0-9]+(\.[0-9]+((e|E)(-|\+)?[0-9]+)?)?""".r).map(_.toDouble)
 
   lazy val ws: Parser[Unit] =
-    ???
+    regex("""\s+""".r).map { _ => () }
 
   // Exercise 13
 
