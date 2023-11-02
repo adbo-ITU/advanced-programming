@@ -597,8 +597,10 @@ class JSONParser[ParseError, Parser[+_]](P: Parsers[ParseError, Parser]):
   //
   // Write here:
   //
-  // (1) ...
+  // (1) The laws depend only on the interface, which is all that Parsers knows
   //
-  // (2) ...
+  // (2) The advantage is precisely the above - we use only the interface, thus the laws
+  //     apply to ALL parsers. By placing it in the abstract trait, we are sure to not
+  //     depend on some non-general type or condition.
 
 end JSONParser
