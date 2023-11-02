@@ -209,7 +209,7 @@ trait Parsers[ParseError, Parser[+_]]:
 
   extension [A](p: Parser[A])
     def many: Parser[List[A]] =
-      p.map2(p.many)(_ :: _).or(succeed(List())).map(_.reverse)
+      p.map2(p.many)(_ :: _).or(succeed(List()))
 
   // Exercise 3
 
@@ -236,7 +236,6 @@ trait Parsers[ParseError, Parser[+_]]:
   // Exercise 6
 
   extension [A](p: Parser[A])
-    // No order was specified, so I haven't reversed like earlier
     def listOfN(n: Int): Parser[List[A]] =
       if n <= 0 then succeed(List())
       else p.map2(p.listOfN(n - 1))(_ :: _)
@@ -553,23 +552,30 @@ class JSONParser[ParseError, Parser[+_]](P: Parsers[ParseError, Parser]):
 
   // Exercise 13
 
-  private lazy val commaSeparatedVals: Parser[List[JSON]] =
-    ???
+  private def wsSurround[A](p: Parser[A]): Parser[A] =
+    ws.* |* p *| ws.*
+
+  private def commaSeparated[A](p: Parser[A]): Parser[List[A]] =
+    val first = wsSurround(p)
+    val rest = wsSurround(char(',') |* ws.* |* p).*
+    first.map2(rest)(_ :: _)
 
   lazy val jarray: Parser[JArray] =
-    ???
+    (char('[') |* commaSeparated(json) *| char(']')).map(l =>
+      JArray(l.toVector)
+    )
 
   lazy val field: Parser[(String, JSON)] =
-    ???
-
-  private lazy val commaSeparatedFields: Parser[List[(String, JSON)]] =
-    ???
+    QUOTED *| wsSurround(char(':')) ** json
 
   lazy val jobject: Parser[JObject] =
-    ???
+    (char('{') |* commaSeparated(field) *| char('}')).map(l => JObject(l.toMap))
 
   lazy val json: Parser[JSON] =
-    ???
+    wsSurround(
+      jstring | jobject | jarray |
+        jnull | jnumber | jbool
+    )
 
   // Exercise 14 (no code)
 
