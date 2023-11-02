@@ -213,7 +213,7 @@ trait Parsers[ParseError, Parser[+_]]:
 
   extension [A](p: Parser[A])
     def map[B](f: A => B): Parser[B] =
-      ???
+      p.flatMap(a => succeed(f(a)))
 
   // Exercise 4
 
