@@ -76,11 +76,25 @@ lazy val booleanAnd: Monoid[Boolean] = new:
 
 // a)
 
-def optionMonoid[A]: Monoid[Option[A]] = ???
+def optionMonoid[A]: Monoid[Option[A]] = new:
+  def combine(a1: Option[A], a2: Option[A]) = a1.orElse(a2)
+  val empty = None
 
 // b)
 
-def optionMonoidLift[A: Monoid]: Monoid[Option[A]] = ???
+// We could just inline this but it's nicer to show that the logic
+// is specifically to use "map2"
+extension [A](self: Option[A])
+  def map2(other: Option[A])(f: (A, A) => A): Option[A] =
+    self.flatMap(v1 => other.map(v2 => f(v1, v2)))
+
+def optionMonoidLift[A: Monoid]: Monoid[Option[A]] = new:
+  def combine(a1: Option[A], a2: Option[A]) =
+    a1.map2(a2)(summon[Monoid[A]].combine)
+      .orElse(a1)
+      .orElse(a2)
+
+  val empty = None
 
 // Exercise 3
 
