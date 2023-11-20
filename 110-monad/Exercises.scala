@@ -161,7 +161,8 @@ object MonoidEx7Spec extends org.scalacheck.Properties("exerc7"):
 
 object MonoidEx8Spec extends org.scalacheck.Properties("exerc8"):
 
-  property("Ex08.01: booleanOr is isomorphic to booleanAnd") = ???
+  property("Ex08.01: booleanOr is isomorphic to booleanAnd") =
+    booleanOr.isomorphism(!_, !_)(booleanAnd)
 
 // Exercise 9
 
