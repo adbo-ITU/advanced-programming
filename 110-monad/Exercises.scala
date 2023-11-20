@@ -56,13 +56,21 @@ def listMonoid[A] = new Monoid[List[A]]:
 
 // Exercise 1
 
-lazy val intAddition: Monoid[Int] = ???
+lazy val intAddition: Monoid[Int] = new:
+  def combine(a1: Int, a2: Int) = a1 + a2
+  val empty = 0
 
-lazy val intMultiplication: Monoid[Int] = ???
+lazy val intMultiplication: Monoid[Int] = new:
+  def combine(a1: Int, a2: Int) = a1 * a2
+  val empty = 1
 
-lazy val booleanOr: Monoid[Boolean] = ???
+lazy val booleanOr: Monoid[Boolean] = new:
+  def combine(a1: Boolean, a2: Boolean) = a1 || a2
+  val empty = false
 
-lazy val booleanAnd: Monoid[Boolean] = ???
+lazy val booleanAnd: Monoid[Boolean] = new:
+  def combine(a1: Boolean, a2: Boolean) = a1 && a2
+  val empty = true
 
 // Exercise 2
 
