@@ -108,7 +108,8 @@ object MonoidEx4Spec extends org.scalacheck.Properties("exerc4"):
 
   property("Ex04.01: intAddition is a monoid") = intAddition.laws.monoid
 
-  property("Ex04.02: intMultiplication is a monoid") = intMultiplication.laws.monoid
+  property("Ex04.02: intMultiplication is a monoid") =
+    intMultiplication.laws.monoid
 
   property("Ex04.03: booleanOr is a monoid") = booleanOr.laws.monoid
 
@@ -117,7 +118,8 @@ object MonoidEx4Spec extends org.scalacheck.Properties("exerc4"):
   property("Ex04.05: optionMonoid is a monoid") = optionMonoid[Int].laws.monoid
 
   given monoid: Monoid[Int] = intAddition
-  property("Ex04.06: optionMonoidLift is a monoid") = optionMonoidLift.laws.monoid
+  property("Ex04.06: optionMonoidLift is a monoid") =
+    optionMonoidLift.laws.monoid
 
 end MonoidEx4Spec
 
@@ -128,7 +130,7 @@ end MonoidEx4Spec
 
 extension [B](mb: Monoid[B])
   def foldMap[A](as: List[A])(f: A => B): B =
-    ???
+    as.foldLeft(mb.empty)((b, a) => mb.combine(b, f(a)))
 
 // Exercise 6
 
