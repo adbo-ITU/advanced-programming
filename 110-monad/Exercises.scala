@@ -226,7 +226,7 @@ given foldableList[A]: Foldable[List] = new:
 extension [F[_]: Foldable, A](as: F[A])
   def toList: List[A] = as.toListF
   def toListF: List[A] =
-    ???
+    as.foldRight(Nil: List[A])(_ :: _)
 
 /** *** Part III. Functor
   */
