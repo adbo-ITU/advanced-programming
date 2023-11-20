@@ -213,7 +213,10 @@ end Foldable
 
 // Exercise 11
 
-given foldableList[A]: Foldable[List] = ???
+given foldableList[A]: Foldable[List] = new:
+  extension [A](as: List[A])
+    def foldMap[B](f: A => B)(using mb: Monoid[B]): B =
+      as.foldLeft(mb.empty)((b, a) => mb.combine(b, f(a)))
 
 // Exercise 12
 
