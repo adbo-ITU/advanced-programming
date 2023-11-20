@@ -178,7 +178,7 @@ object MonoidEx10Spec extends org.scalacheck.Properties("exer10"):
 
   property(
     "Ex10.01: productMonoid(optionMonoid[Int])(listMonoid[String]) gives a monoid"
-  ) = ???
+  ) = productMonoid(optionMonoid[Int])(listMonoid[String]).laws.monoid
 
 /* This will be used in the Foldable below: We can get the dual of any monoid
  * just by flipping the `combine`. */
