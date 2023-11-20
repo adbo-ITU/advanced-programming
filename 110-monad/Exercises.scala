@@ -98,7 +98,9 @@ def optionMonoidLift[A: Monoid]: Monoid[Option[A]] = new:
 
 // Exercise 3
 
-def endoMonoid[A]: Monoid[A => A] = ???
+def endoMonoid[A]: Monoid[A => A] = new:
+  def combine(a1: A => A, a2: A => A) = a1 compose a2
+  val empty = identity
 
 // Exercise 4 (tests exercises 1-2, written by student)
 
