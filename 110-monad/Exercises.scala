@@ -106,17 +106,18 @@ def endoMonoid[A]: Monoid[A => A] = new:
 
 object MonoidEx4Spec extends org.scalacheck.Properties("exerc4"):
 
-  property("Ex04.01: intAddition is a monoid") = ???
+  property("Ex04.01: intAddition is a monoid") = intAddition.laws.monoid
 
-  property("Ex04.02: intMultiplication is a monoid") = ???
+  property("Ex04.02: intMultiplication is a monoid") = intMultiplication.laws.monoid
 
-  property("Ex04.03: booleanOr is a monoid") = ???
+  property("Ex04.03: booleanOr is a monoid") = booleanOr.laws.monoid
 
-  property("Ex04.04: booleanAnd is a monoid") = ???
+  property("Ex04.04: booleanAnd is a monoid") = booleanAnd.laws.monoid
 
-  property("Ex04.05: optionMonoid is a monoid") = ???
+  property("Ex04.05: optionMonoid is a monoid") = optionMonoid[Int].laws.monoid
 
-  property("Ex04.06: optionMonoidLift is a monoid") = ???
+  given monoid: Monoid[Int] = intAddition
+  property("Ex04.06: optionMonoidLift is a monoid") = optionMonoidLift.laws.monoid
 
 end MonoidEx4Spec
 
