@@ -143,10 +143,12 @@ extension [B](mb: Monoid[B])
 extension [A: Arbitrary: Equality](ma: Monoid[A])
 
   def homomorphism[B](f: A => B)(mb: Monoid[B]): Prop =
-    ???
+    forAll { (a1: A, a2: A) =>
+      mb.combine(f(a1), f(a2)) == f(ma.combine(a1, a2))
+    }
 
   def isomorphism[B: Arbitrary](f: A => B, g: B => A)(mb: Monoid[B]): Prop =
-    ???
+    ma.homomorphism(f)(mb) && mb.homomorphism(g)(ma)
 
 // Exercise 7 (tests for Exercise 6, written by the student)
 
