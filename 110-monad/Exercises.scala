@@ -154,7 +154,8 @@ extension [A: Arbitrary: Equality](ma: Monoid[A])
 
 object MonoidEx7Spec extends org.scalacheck.Properties("exerc7"):
 
-  property("Ex07.01: stringMonoid is isomorphic to listMonoid[Char]") = ???
+  property("Ex07.01: stringMonoid is isomorphic to listMonoid[Char]") =
+    stringMonoid.isomorphism(_.toList, _.mkString)(listMonoid)
 
 // "Exercise 8 (tests for Exercise 1, written the by student)
 
