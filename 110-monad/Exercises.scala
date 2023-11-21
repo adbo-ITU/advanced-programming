@@ -368,9 +368,11 @@ lazy val listMonad: Monad[List] = new:
 
 object FunctorEx16Spec extends org.scalacheck.Properties("exer16"):
 
-  property("Ex16.01: optionMonad is a monad") = ???
+  property("Ex16.01: optionMonad is a monad") =
+    optionMonad.monadLaws.monad[Int, String, List[Char]]
 
-  property("Ex16.02: listMonad is a monad") = ???
+  property("Ex16.02: listMonad is a monad") =
+    listMonad.monadLaws.monad[Int, String, Int]
 
 end FunctorEx16Spec
 
