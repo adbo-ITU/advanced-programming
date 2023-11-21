@@ -389,11 +389,46 @@ extension [F[_]](m: Monad[F])
 
 extension [F[_]](m: Monad[F])
   def replicateM[A](n: Int, ma: F[A]): F[List[A]] =
-    ???
+    m.sequence(List.fill(n)(ma))
 
 // Write in the answer below ...
 //
-// ???
+// In general, replicateM is a way to express permutations with replacements
+// allowed. I.e. "give me all the possible ways I can construct a list of M
+// elements where each element should be one of the given values".
+//
+// Side note, this is what calculatorsoup.com says about Permutation Replacement:
+//   > The number of ways to choose a sample of r elements from a set of n
+//   > distinct objects where order does matter and replacements are allowed.
+//
+// This should yield n^r different outputs.
+//
+// Here's what happens:
+//
+//   scala> listMonad.replicateM(3, List(2))
+//   val res2: List[List[Int]] = List(List(2, 2, 2))
+//
+// Indeed, 1^3 = 1 output.
+//
+//   scala> optionMonad.replicateM(3, Some(2))
+//   val res3: Option[List[Int]] = Some(List(2, 2, 2))
+//
+// For options, there is always only one object, i.e. 1^r = 1 output in all
+// cases. The output is a list with the element replicated r times.
+//
+// For lists it becomes really interesting:
+//
+//   scala> listMonad.replicateM(3, List(1, 2))
+//   val res11: List[List[Int]] = List(List(1, 1, 1), List(1, 1, 2), List(1, 2, 1), List(1, 2, 2), List(2, 1, 1), List(2, 1, 2), List(2, 2, 1), List(2, 2, 2))
+//
+// Indeed, again: 2^3 = 8 different outputs.
+//
+// And just for completeness sake, the below shows 3^4:
+//
+//   scala> listMonad.replicateM(4, List(1, 2, 3))
+//   val res15: List[List[Int]] = List(List(1, 1, 1, 1), List(1, 1, 1, 2), List(1, 1, 1, 3), List(1, 1, 2, 1), List(1, 1, 2, 2), List(1, 1, 2, 3), List(1, 1, 3, 1), List(1, 1, 3, 2), List(1, 1, 3, 3), List(1, 2, 1, 1), List(1, 2, 1, 2), List(1, 2, 1, 3), List(1, 2, 2, 1), List(1, 2, 2, 2), List(1, 2, 2, 3), List(1, 2, 3, 1), List(1, 2, 3, 2), List(1, 2, 3, 3), List(1, 3, 1, 1), List(1, 3, 1, 2), List(1, 3, 1, 3), List(1, 3, 2, 1), List(1, 3, 2, 2), List(1, 3, 2, 3), List(1, 3, 3, 1), List(1, 3, 3, 2), List(1, 3, 3, 3), List(2, 1, 1, 1), List(2, 1, 1, 2), List(2, 1, 1, 3), List(2, 1, 2, 1), List(2, 1, 2, 2), List(2, 1, 2, 3), List(2, 1, 3, 1), List(2, 1, 3, 2), List(2, 1, 3, 3), List(2, 2, 1, 1), List(2, 2, 1, 2), List(2, 2, 1, 3), List(2, 2, 2, 1), List(2, 2, 2, 2), List(2, 2, 2, 3), List(2, 2, 3, 1), List(2, 2, 3, 2), List(2, 2, 3, 3), List(2, 3, 1, 1), List(2, 3, 1, 2), List(2, 3, 1, 3), List(2, 3, 2, 1), List(2, 3, 2, 2), List(2, 3, 2, 3), List(2, 3, 3, 1), List(2, 3, 3, 2), List(2, 3, 3, 3), List(3, 1, 1, 1), List(3, 1, 1, 2), List(3, 1, 1, 3), List(3, 1, 2, 1), List(3, 1, 2, 2), List(3, 1, 2, 3), List(3, 1, 3, 1), List(3, 1, 3, 2), List(3, 1, 3, 3), List(3, 2, 1, 1), List(3, 2, 1, 2), List(3, 2, 1, 3), List(3, 2, 2, 1), List(3, 2, 2, 2), List(3, 2, 2, 3), List(3, 2, 3, 1), List(3, 2, 3, 2), List(3, 2, 3, 3), List(3, 3, 1, 1), List(3, 3, 1, 2), List(3, 3, 1, 3), List(3, 3, 2, 1), List(3, 3, 2, 2), List(3, 3, 2, 3), List(3, 3, 3, 1), List(3, 3, 3, 2), List(3, 3, 3, 3))
+//   scala> listMonad.replicateM(4, List(1, 2, 3)).length
+//   val res16: Int = 81
 
 // Exercise 19
 
