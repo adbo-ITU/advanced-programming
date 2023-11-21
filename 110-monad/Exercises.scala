@@ -383,7 +383,7 @@ end FunctorEx16Spec
 
 extension [F[_]](m: Monad[F])
   def sequence[A](fas: List[F[A]]): F[List[A]] =
-    ???
+    fas.foldRight(m.unit(Nil))((a, b) => m.map2(a)(b)(_ :: _))
 
 // Exercise 18
 
