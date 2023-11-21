@@ -274,7 +274,8 @@ object FunctorEx14Spec extends org.scalacheck.Properties("exer14"):
 
   // Exercise 14
 
-  property("Ex14.02: optionFunctor satisfies map law (tests Exercise 13)") = ???
+  property("Ex14.02: optionFunctor satisfies map law (tests Exercise 13)") =
+    optionFunctor.functorLaws.map[Int]
 
 end FunctorEx14Spec
 
