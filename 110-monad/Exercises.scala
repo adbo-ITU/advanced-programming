@@ -258,7 +258,10 @@ end Functor
 
 // Exercise 13
 
-lazy val optionFunctor: Functor[Option] = ???
+lazy val optionFunctor: Functor[Option] = new:
+  extension [A](fa: Option[A])
+    def map[B](f: A => B): Option[B] =
+      fa.map(f)
 
 // this instance is provided
 val listFunctor: Functor[List] = new:
