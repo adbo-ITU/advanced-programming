@@ -434,4 +434,4 @@ extension [F[_]](m: Monad[F])
 
 extension [F[_]](m: Monad[F])
   def compose[A, B, C](f: A => F[B], g: B => F[C]): A => F[C] =
-    ???
+    a => m.flatMap(f(a))(g)
