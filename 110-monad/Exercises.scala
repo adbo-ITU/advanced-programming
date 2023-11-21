@@ -352,9 +352,17 @@ end Monad
 
 // Exercise 15
 
-lazy val optionMonad: Monad[Option] = ???
+lazy val optionMonad: Monad[Option] = new:
+  def unit[A](a: => A): Option[A] = Some(a)
 
-lazy val listMonad: Monad[List] = ???
+  extension [A](fa: Option[A])
+    def flatMap[B](f: A => Option[B]): Option[B] = fa.flatMap(f)
+
+lazy val listMonad: Monad[List] = new:
+  def unit[A](a: => A): List[A] = List(a)
+
+  extension [A](fa: List[A])
+    def flatMap[B](f: A => List[B]): List[B] = fa.flatMap(f)
 
 // Exercise 16 (tests for Exercise 15, written by the student)
 
