@@ -120,8 +120,7 @@ val prBBGivenBoy =
 
 println(s"Pr. of 2 Boys given at least 1 via condition: $prBBGivenBoy")
 
-// Example with Balls (also shows how to build models with for-yield)
-// For-Yield gives a rather clean and elegant way to build models
+// Example with Balls
 
 enum Box: 
   case A, B 
