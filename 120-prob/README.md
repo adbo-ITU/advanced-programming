@@ -36,6 +36,10 @@ For the following ideas, the course on _Modeling Language and Systems_
 might be useful (but also check my book, the chapter on Internal
 DSLs).
 
+- Implement cats and scalaz type class instances for the probabilistic
+  programming library so that it becomes compatible with the rest of the
+  scala's functional programming ecosystem.
+
 - Investigate using the shapeless library to avoiding nesting within
   tuples (models).  We have that now but using extremely many overloaded
   extensions which is a pain. Perhaps shapeless could reduce this,
