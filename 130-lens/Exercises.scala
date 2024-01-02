@@ -453,4 +453,4 @@ val list0: List[Int] = List(1, 2, 3, 4, 5, 6)
 
 // list1 should contain list0 with the third element incremented:
 
-lazy val list1: List[Int] = ???
+lazy val list1: List[Int] = ith(2).modify((_: Int) + 1)(list0)
