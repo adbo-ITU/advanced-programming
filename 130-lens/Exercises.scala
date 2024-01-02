@@ -59,13 +59,18 @@ val L1 = Lens[(String, Int), String](get = _._1)(replace = s1 => _ => (s1, 0))
  */
 
 lazy val L2: Lens[String, (String, Int)] =
-  ???
+  Lens[String, (String, Int)](get = s => (s, 0))(replace = { case (s1, n) =>
+    s => s1
+  })
 
 /* Finally, complete the example from page 7 in Foster et al.:
  */
 
 lazy val L3: Lens[(String, Int), String] =
-  ???
+  Lens[(String, Int), String](get = { case (s, n) => s })(replace = s => {
+    case (`s`, n) => (s, n)
+    case (s1, n)  => (s1, n + 1)
+  })
 
 /* We will test these implementations in Exercise 3.  For now, we are
  * satisfied if they type check and compile.
