@@ -69,7 +69,7 @@ enum Ball:
 import Ball.*
 
 def pick(n: Int): Dist[Ball] =
-  Pigaro.bernoulli(1.0 / (n + 1), Red, Black)
+  Pigaro.bernoulli("ball")(1.0 / (n + 1), Red, Black)
 
 //  Exercise 2.
 //
@@ -87,7 +87,10 @@ def pick(n: Int): Dist[Ball] =
 // const/unit/pure.
 
 def move(player: Player, n: Int): Dist[Player] =
-  ???
+  pick(n).flatMap {
+    case Red   => Dirac(player)
+    case Black => move(next(player), n - 1)
+  }
 
 // Exercise 3.
 //
