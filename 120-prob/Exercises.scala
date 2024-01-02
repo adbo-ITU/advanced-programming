@@ -5,8 +5,7 @@ package adpro.prob
 import pigaro.*
 
 // Used by samplers
-given rng: spire.random.rng.SecureJava 
-  = spire.random.rng.SecureJava.apply
+given rng: spire.random.rng.SecureJava = spire.random.rng.SecureJava.apply
 
 // All the exercise text is included below in comments (no PDF file
 // this week).
@@ -40,7 +39,7 @@ val M = 42
 // We model the players using, for instance, an enum:
 
 enum Player:
-  case Peter, Paula 
+  case Peter, Paula
 
 import Player.*
 
@@ -65,20 +64,20 @@ val BallsNo: Int = 8
 
 // bernoulli[U] (probability: Double, success: U, failure: U): Dist[U]
 
-enum Ball: 
+enum Ball:
   case Red, Black
 import Ball.*
 
-def pick (n: Int): Dist[Ball] = ???
+def pick(n: Int): Dist[Ball] = ???
 
-//  Exercise 2. 
+//  Exercise 2.
 //
 //  Write a function 'move' that given the starting player and the
 //  number of black balls 'n' present in the urn returns the
-//  probability distribution defining which player wins. 
+//  probability distribution defining which player wins.
 //
-// Hint: Andrzej's solution used 'pick' and 'Dirac'. 
-// 
+// Hint: Andrzej's solution used 'pick' and 'Dirac'.
+//
 // Dirac[A](a: A): Dist[A]
 //
 // This constructor returns a distribution where the value 'a' has
@@ -86,8 +85,7 @@ def pick (n: Int): Dist[Ball] = ???
 // distribution - only one outcome is legal. This is the monadit
 // const/unit/pure.
 
-
-def move(player: Player, n: Int): Dist[Player] = 
+def move(player: Player, n: Int): Dist[Player] =
   ???
 
 // Exercise 3.
@@ -97,7 +95,7 @@ def move(player: Player, n: Int): Dist[Player] =
 //
 // Use the function 'move' to estimate the chance of Paula winning
 // when she starts, and when Peter starts, if the urn contains 'BallsNo' balls
-// in total (including one red).   
+// in total (including one red).
 //
 // To calculate probability, first use Dist.sample(N) to
 // obtain a sample of N elements (type IData), and then use IData's
@@ -108,16 +106,15 @@ def move(player: Player, n: Int): Dist[Player] =
 // IData[A].pr(value: A): Double
 
 // Probability that Paula wins given Paula starts (the total no of balls: BallsNo)
-def probPaulaStarts: Double = 
+def probPaulaStarts: Double =
   ???
 
 // Probability that Paula wins given Peter starts (the total no of balls: BallsNo)
-def probPeterStarts: Double = 
+def probPeterStarts: Double =
   ???
 
-//  Which strategy is beter for Paula? What if BallsNo == 9? 
+//  Which strategy is beter for Paula? What if BallsNo == 9?
 //  Write your answer here in a comment: ___
-
 
 // Exercise 4.
 //
@@ -155,33 +152,31 @@ lazy val firstMover: Dist[Player] =
 // Thus the type Dist[(Player, Player)] seems appropriate.
 //
 // The _flatMap function, or its domain-specific synonym probDep, may
-// prove useful. 
+// prove useful.
 
-def gameResult: Dist[(Player, Player)] = 
+def gameResult: Dist[(Player, Player)] =
   ???
 
 // What is the probability that Paula wins with this uniform prior? Does it
 // agree with your intuition? Write the answer in a comment:
 // ____
 
-// Now we are going to make the observation that Paula wins. 
+// Now we are going to make the observation that Paula wins.
 
-lazy val gameWonByPaula: Dist[(Player, Player)] = 
-  gameResult.matching { case (_,Paula) => }
+lazy val gameWonByPaula: Dist[(Player, Player)] =
+  gameResult.matching { case (_, Paula) => }
 
 // Calculate the probability that Paula started given that she won.
 // You will need to sample and use IData's .pr or .prMatching
 // methods.
 
-lazy val probPaulaStarted: Double = 
+lazy val probPaulaStarted: Double =
   ???
 
 // Does this probability depend on the number of balls in the urn in the
 // urn being even or odd? What if it is even? What if it is odd?
 //
 // ____
-
-
 
 // Exercise 6.
 //
@@ -221,12 +216,12 @@ lazy val blackBallsNo: Dist[Int] =
 
 // There is no test for this step of the computation.
 
-def outcome: Dist[(Int, Player)] = 
+def outcome: Dist[(Int, Player)] =
   ???
 
 // The following asserts that Paula has won.
 
-lazy val paulaWon: Dist[(Int, Player)] = 
+lazy val paulaWon: Dist[(Int, Player)] =
   ???
 
 // Now define the posterior probabilities for all size of the urn from 1 to
@@ -244,7 +239,5 @@ lazy val posteriorOdd: Double =
 //
 // _____
 
-
 // Reflect whether the above estimation would take you more time analytically
 // or with a probabilistic programming library?
-
