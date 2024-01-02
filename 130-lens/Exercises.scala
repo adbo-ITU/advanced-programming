@@ -310,10 +310,14 @@ val _zipcode1: Lens[Address, ZipCode] =
 // the same specification as itu2).
 
 lazy val _students1: Lens[University, Students] =
-  ???
+  Focus[University](_.students)
 
+@nowarn("cat=deprecation")
 lazy val itu3: University =
-  ???
+  _students1
+    .composeOptional(index("Alex"))
+    .andThen(_zipcode1)
+    .replace("9100")(itu)
 
 /* As a curiosity, here is an example that this can be moved even closer to
  * imperative style, using extension methods and macros:
