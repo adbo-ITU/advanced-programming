@@ -68,7 +68,8 @@ enum Ball:
   case Red, Black
 import Ball.*
 
-def pick(n: Int): Dist[Ball] = ???
+def pick(n: Int): Dist[Ball] =
+  Pigaro.bernoulli(1.0 / (n + 1), Red, Black)
 
 //  Exercise 2.
 //
