@@ -15,7 +15,7 @@ given rng: spire.random.rng.SecureJava = spire.random.rng.SecureJava.apply
 // test suite becomes, due to many samplings it runs. You may want to
 // disable tests temporarily to speed up work.
 
-val M = 42
+val M = 1000
 
 // For many exercises, you are (quietely) expected to run the queries
 // in the REPL in order to inspect probability values (or to print
@@ -111,14 +111,22 @@ def move(player: Player, n: Int): Dist[Player] =
 
 // Probability that Paula wins given Paula starts (the total no of balls: BallsNo)
 def probPaulaStarts: Double =
-  ???
+  move(Paula, BallsNo - 1).sample(M).pr(Paula)
 
 // Probability that Paula wins given Peter starts (the total no of balls: BallsNo)
 def probPeterStarts: Double =
-  ???
+  move(Peter, BallsNo - 1).sample(M).pr(Paula)
 
 //  Which strategy is beter for Paula? What if BallsNo == 9?
-//  Write your answer here in a comment: ___
+//  Write your answer here in a comment:
+//
+//  As far as I can see, it doesn't matter if BallsNo = 8. Some runs say
+//  starting is better, some say starting is worse. Fx, I ran it 1000 times
+//  twice. First, 513/1000 were winning if paula started, then 496/1000 were
+//  winning.
+//
+//  For BallsNo = 9, I consistently get 10-25/1000 games extra won for Paula.
+//  So... very minor, but it seems consistent.
 
 // Exercise 4.
 //
