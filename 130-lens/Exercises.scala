@@ -46,6 +46,8 @@ import org.scalactic.TripleEquals.*
 import cats.Order
 import cats.implicits.catsKernelStdOrderForString
 
+import scala.annotation.nowarn
+
 /* Exercise 1
  *
  * Study the implementation of lens L1 below and compare it to the first
@@ -232,7 +234,12 @@ val itu = University(
  * or Java).
  */
 
-lazy val itu1: University = ???
+lazy val itu1: University = itu.copy(
+  students = itu.students.updatedWith("Alex") {
+    case Some(addr) => Some(addr.copy(zipcode = "9100"))
+    case None       => None
+  }
+)
 
 /* As you see doing this without lenses is very very annoying.  Updating
  * nested properties in complex objects is much easier in imperative
@@ -249,14 +256,16 @@ lazy val itu1: University = ???
  */
 
 lazy val _zipcode: Lens[Address, ZipCode] =
-  ???
+  Lens[Address, ZipCode](get = _.zipcode)(replace = z => _.copy(zipcode = z))
 
 /* b) design a lense that accesses the students collection from university:
  *  (1-2 lines)
  */
 
 lazy val _students: Lens[University, Students] =
-  ???
+  Lens[University, Students](get = _.students)(replace =
+    s => _.copy(students = s)
+  )
 
 /* c) Use the following partial lense 'index(name)' from Monocle:
  *
@@ -274,8 +283,12 @@ lazy val _students: Lens[University, Students] =
  * (1-2 lines)
  */
 
+@nowarn("cat=deprecation")
 lazy val itu2: University =
-  ???
+  _students
+    .composeOptional(index("Alex"))
+    .andThen(_zipcode)
+    .replace("9100")(itu)
 
 /* Now once you provide lenses for your types, navigating and modifying deep
  * structures becomes more readable and easier to write.  In fact, lense
