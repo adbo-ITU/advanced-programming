@@ -158,7 +158,7 @@ def probPeterStarts: Double =
 // We first create a uniform prior for the first mover:
 
 lazy val firstMover: Dist[Player] =
-  ???
+  Pigaro.bernoulli(0.5, Paula, Peter)
 
 // Now create a nullary function 'gameResult' that picks the first mover
 // randomly using 'firstMover' and then returns the probability distribution
@@ -171,7 +171,7 @@ lazy val firstMover: Dist[Player] =
 // prove useful.
 
 def gameResult: Dist[(Player, Player)] =
-  ???
+  firstMover.probDep("result") { player => move(player, BallsNo - 1) }
 
 // What is the probability that Paula wins with this uniform prior? Does it
 // agree with your intuition? Write the answer in a comment:
@@ -187,12 +187,14 @@ lazy val gameWonByPaula: Dist[(Player, Player)] =
 // methods.
 
 lazy val probPaulaStarted: Double =
-  ???
+  gameWonByPaula.sample(M).prMatching { case (Paula, _) => }
 
 // Does this probability depend on the number of balls in the urn in the
 // urn being even or odd? What if it is even? What if it is odd?
 //
-// ____
+// Yes it does:
+//   - BallsNo = 8: 0.502 always
+//   - BallsNo = 9: 0.527 always
 
 // Exercise 6.
 //
