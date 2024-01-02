@@ -427,14 +427,19 @@ lazy val itu6: University =
  */
 
 def ith[A](n: Integer): Optional[List[A], A] =
-  ???
+  Optional[List[A], A](_.lift(n))(a =>
+    l => if n < l.size then l.updated(n, a) else l
+  )
 
 /* Now create the total lense with a default value that extends the
  * list, if the list is too short (8-15 lines):
  */
 
 def ith1[A](default: A)(n: Integer): Lens[List[A], A] =
-  ???
+  Lens[List[A], A](_.lift(n).getOrElse(default))(a => {
+    case l if n < l.size => l.updated(n, a)
+    case l               => l ::: List.fill(n - l.size)(default) ::: List(a)
+  })
 
 /* Exercise 12
  *
