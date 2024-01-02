@@ -153,8 +153,15 @@ end Ex03Spec
  * (ca 10 lines of code)
  */
 
-def codiag[A]: Lens[Either[A, A], A] =
-  ???
+def codiag[A]: Lens[Either[A, A], A] = {
+  Lens[Either[A, A], A](get = {
+    case Left(a)  => a
+    case Right(a) => a
+  })(replace = a => {
+    case Left(_)  => Left(a)
+    case Right(_) => Right(a)
+  })
+}
 
 /* Exercise 5
  *
