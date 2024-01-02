@@ -1,7 +1,7 @@
-/* Advanced Programming, A. Wąsowski, IT University of Copenhagen 
+/* Advanced Programming, A. Wąsowski, IT University of Copenhagen
  *
  * Monocle is a library providing lenses for Scala (one of many in fact)
- * 
+ *
  * A Tutorial and other documentation for Monocle lenses is here:
  * https://www.optics.dev/Monocle/
  *
@@ -46,15 +46,13 @@ import org.scalactic.TripleEquals.*
 import cats.Order
 import cats.implicits.catsKernelStdOrderForString
 
-
-
 /* Exercise 1
  *
  * Study the implementation of lens L1 below and compare it to the first
  * example in Foster et al. (Page 6).
  */
 
-val L1 = Lens[(String,Int), String](get = _._1)(replace = s1 => _ => (s1, 0))
+val L1 = Lens[(String, Int), String](get = _._1)(replace = s1 => _ => (s1, 0))
 
 /* Now, complete the second example from page 6, and the example from page 7
  * below:
@@ -66,14 +64,12 @@ lazy val L2: Lens[String, (String, Int)] =
 /* Finally, complete the example from page 7 in Foster et al.:
  */
 
-lazy val L3: Lens[(String,Int), String] =
+lazy val L3: Lens[(String, Int), String] =
   ???
 
 /* We will test these implementations in Exercise 3.  For now, we are
  * satisfied if they type check and compile.
  */
-
-
 
 /* Exercise 2
  *
@@ -96,7 +92,7 @@ object Laws:
   def putPut[C: Arbitrary: Equality, A: Arbitrary](l: Lens[C, A]): Prop =
     ???
 
-  /* There is no tests for this exercise, but we will use the laws below, 
+  /* There is no tests for this exercise, but we will use the laws below,
    * which will also test them.
    *
    * The two laws below may be useful in Exercise 3 (cf. Foster et al.).
@@ -105,45 +101,37 @@ object Laws:
   def wellBehavedTotalLense[A: Arbitrary, C: Arbitrary](l: Lens[C, A]): Prop =
     (putGet(l) :| "PutGet law: ") && (getPut(l) :| "GetPut law: ")
 
-  def veryWellBehavedTotalLense[A: Arbitrary, C: Arbitrary] (l: Lens[C,A]) =
-    (wellBehavedTotalLense(l) :| "Well-behaved total lense") 
+  def veryWellBehavedTotalLense[A: Arbitrary, C: Arbitrary](l: Lens[C, A]) =
+    (wellBehavedTotalLense(l) :| "Well-behaved total lense")
       && (putPut(l) :| "PutPut law")
 
-
-
-/* Exercise 3 
+/* Exercise 3
  *
  * Test  lenses L1, L2, and L3 using the laws implemented above. Check
  * with the paper whether the results are consistent.
  *
  * Lens L1 fails getPut (see Foster). Check to convince yourself that it fails
- * and comment out or negate the getPut test before submission so that the test passes. 
+ * and comment out or negate the getPut test before submission so that the test passes.
  *
  * Lens L2 fails putGet see p. 6 in Foster (check to convince yourself that it
  * fails, and submit only the getPut and putPut test; comment out the putGet or negate it).
  *
  * Lens L3 fails PutPut (check yourself and submit only the tests for the other
  * laws of well behaved, like above)
- */ 
+ */
 
-object Ex03Spec 
-  extends org.scalacheck.Properties("ex03.."):
+object Ex03Spec extends org.scalacheck.Properties("ex03.."):
 
-  property("Ex03.00: putGet && putPut for L1") =
-    ???
+  property("Ex03.00: putGet && putPut for L1") = ???
 
-  property("Ex03.01: getPut && putPut laws") =
-    ???
+  property("Ex03.01: getPut && putPut laws") = ???
 
-  property("Ex03.02: L3 is well behaved") =
-    ???
+  property("Ex03.02: L3 is well behaved") = ???
 
-end Ex03Spec 
-
-
+end Ex03Spec
 
 /* Exercise 4
- * 
+ *
  * Implement the lens codiag from Either[A, A] to A as presented by [Morris,
  * 2012]. This may be thought of as taking either A or A and stripping the
  * choice of A from the Either value. The type of this value is Lens[Either[A,
@@ -154,8 +142,6 @@ end Ex03Spec
 
 def codiag[A]: Lens[Either[A, A], A] =
   ???
-
-
 
 /* Exercise 5
  *
@@ -180,7 +166,6 @@ def codiag[A]: Lens[Either[A, A], A] =
 def codiag1[A]: Lens[Either[A, A], A] =
   ???
 
- 
 /* Exercise 6
  *
  * Important: This exercise shows the main application of lenses
@@ -191,50 +176,48 @@ type ZipCode = String
 type Name = String
 type Students = Map[Name, Address]
 
-case class Address (
-  val zipcode: ZipCode,
-  val country: String
+case class Address(
+    val zipcode: ZipCode,
+    val country: String
 )
 
-case class University (
-  val students: Students,
-  val address: Address
+case class University(
+    val students: Students,
+    val address: Address
 )
 
 val itu = University(
-  students = Map[Name, Address] (
-    "Stefan"    -> Address ("2300",   "Denmark"),
-    "Axel"      -> Address ("91000",  "France"),
-    "Alex"      -> Address ("2800",   "Denmark"),
-    "Christian" -> Address ("D-4242", "Germany"),
-    "Andrzej"   -> Address ("00-950", "Poland"),
-    "Thorsten"  -> Address ("6767",   "Sweden")
+  students = Map[Name, Address](
+    "Stefan" -> Address("2300", "Denmark"),
+    "Axel" -> Address("91000", "France"),
+    "Alex" -> Address("2800", "Denmark"),
+    "Christian" -> Address("D-4242", "Germany"),
+    "Andrzej" -> Address("00-950", "Poland"),
+    "Thorsten" -> Address("6767", "Sweden")
   ),
   address = Address("2300", "Amager")
 )
 
 /* Write an expression that modifies "itu" in such a way that Alex is in
  * Denmark but at post-code 9100. First do it *without* using lenses.
- * 
+ *
  * Hint: every class in Scala has a method called 'copy' that takes the same
  * parameters as the constructor.  All parameters are optional.  Use the name
  * assignment convention to only change values of properties that you want in
  * the copy.  For instance itu.copy(students = itu.students.tail) creates a
  * copy of ITU without the first student.
- * 
+ *
  * Reflect how inconvenient it is, even with the copy method. Notice, how easy
  * and natural this change would be in an imperative style (for instance in C#
  * or Java).
  */
 
 lazy val itu1: University = ???
- 
+
 /* As you see doing this without lenses is very very annoying.  Updating
  * nested properties in complex objects is much easier in imperative
  * programming.
- */ 
-
-
+ */
 
 /* Exercise 7
  *
@@ -250,7 +233,7 @@ lazy val _zipcode: Lens[Address, ZipCode] =
 
 /* b) design a lense that accesses the students collection from university:
  *  (1-2 lines)
- */ 
+ */
 
 lazy val _students: Lens[University, Students] =
   ???
@@ -262,12 +245,12 @@ lazy val _students: Lens[University, Students] =
  * This lens focuses the view on the entry in a map with a given index.
  * Optional in the Monocle terminology is the same a partial lense in the
  * terminology of Foster et al.
- * 
+ *
  * Use lenses compositin to update itu the same way (move Alex to zipcode
  * 9100) but in a clearer way. Use the infix binary operator composeOptional
  * to compose a lense with an optional, and use andThen to compose
  * the optional with a lense).
- * 
+ *
  * (1-2 lines)
  */
 
@@ -280,8 +263,6 @@ lazy val itu2: University =
  * your case classess, so this access can come at almost no (coding) cost.
  */
 
-
-
 /* Exercise 8
  *
  * Monocle provides compiler macros (a part of Scala we side step in ADPRO),
@@ -289,7 +270,7 @@ lazy val itu2: University =
  * instance _zipcode from above can be easily generated as follows:
  */
 
-val _zipcode1 : Lens[Address, ZipCode] =
+val _zipcode1: Lens[Address, ZipCode] =
   Focus[Address](_.zipcode)
 
 // Define _students1 analogously, complete itu3 to use these new lenses (with
@@ -310,7 +291,9 @@ lazy val itu4: University =
     .focus(_.students)
     .at("Alex")
     .some
-    .andThen(_zipcode) // focus syntax is not implemented for Optionals in monocle
+    .andThen(
+      _zipcode
+    ) // focus syntax is not implemented for Optionals in monocle
     .replace("9100")
 
 /* Note how similarly it would look in Java, imperative style
@@ -322,8 +305,6 @@ lazy val itu4: University =
  *      .setZipcode ("9100")
  * } catch NoSuchElementException { }
  */
-
-
 
 /* Exercise 9
  *
@@ -366,7 +347,7 @@ lazy val itu4: University =
  *   _country (1 line):
  */
 
-lazy val _country: Lens[Address,String] = ???
+lazy val _country: Lens[Address, String] = ???
 
 /* Now compute itu5, that has the same entries as ITU, but all country names
  * are upper case. (1-6 lines)
@@ -374,8 +355,6 @@ lazy val _country: Lens[Address,String] = ???
 
 lazy val itu5: University =
   ???
-
-
 
 /* Exercise 10
  *
@@ -389,7 +368,6 @@ lazy val itu5: University =
 lazy val itu6: University =
   ???
 
- 
 /* Exercise 11
  *
  * We are returning to the construction of basic lenses.  Implement a
@@ -417,8 +395,6 @@ def ith[A](n: Integer): Optional[List[A], A] =
 def ith1[A](default: A)(n: Integer): Lens[List[A], A] =
   ???
 
-
-
 /* Exercise 12
  *
  * The lens 'ith' demonstrates that lenses emulate a form of "imperative"
@@ -432,4 +408,3 @@ val list0: List[Int] = List(1, 2, 3, 4, 5, 6)
 // list1 should contain list0 with the third element incremented:
 
 lazy val list1: List[Int] = ???
-
