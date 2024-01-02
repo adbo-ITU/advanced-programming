@@ -158,7 +158,7 @@ def probPeterStarts: Double =
 // We first create a uniform prior for the first mover:
 
 lazy val firstMover: Dist[Player] =
-  Pigaro.bernoulli(0.5, Paula, Peter)
+  Pigaro.bernoulli("player")(0.5, Paula, Peter)
 
 // Now create a nullary function 'gameResult' that picks the first mover
 // randomly using 'firstMover' and then returns the probability distribution
@@ -225,7 +225,7 @@ val UpperBound = 6
 // Pigaro.uniform[A](name: String)(a : A*) :Element[A]
 
 lazy val blackBallsNo: Dist[Int] =
-  ???
+  Pigaro.uniform("blackBallsNo")(0 until UpperBound*)
 
 // Now convert the prior distribution on the initial number of black balls in
 // the urn, into a distribution over the winning player.  Since the game is
@@ -235,12 +235,12 @@ lazy val blackBallsNo: Dist[Int] =
 // There is no test for this step of the computation.
 
 def outcome: Dist[(Int, Player)] =
-  ???
+  blackBallsNo.probDep("result")(move(Paula, _))
 
 // The following asserts that Paula has won.
 
 lazy val paulaWon: Dist[(Int, Player)] =
-  ???
+  outcome.matching { case (_, Paula) => }
 
 // Now define the posterior probabilities for all size of the urn from 1 to
 // UpperBound. You can do this using IData.pr.
@@ -251,11 +251,19 @@ lazy val paulaWon: Dist[(Int, Player)] =
 // IData[T].prMatching  { case ... => }
 
 lazy val posteriorOdd: Double =
-  ???
+  // == 0 because n is the number of black balls, not total balls
+  paulaWon.sample(M).prMatching { case (n, _) if n % 2 == 0 => }
 
 // Is the posteriorOdd greater than 1/2? Why?
 //
-// _____
+// Always >0.5. In my runs approx 0.6. Because the first player always gets to
+// make one more move than the other player if there is an odd number of balls.
+// I.e. the extra ball goes to the first player, giving that playing a bigger
+// chance of getting the red ball.
 
 // Reflect whether the above estimation would take you more time analytically
 // or with a probabilistic programming library?
+//
+// I still feel more comfortable with the analytic way since I've used that before.
+// But I can see how, if you get used to thinking in the way that this library
+// requires you to, you can very quickly produce some good estimates.
