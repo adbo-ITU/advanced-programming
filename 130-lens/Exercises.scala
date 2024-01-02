@@ -391,7 +391,7 @@ lazy val _country: Lens[Address, String] = Focus[Address](_.country)
  */
 
 lazy val itu5: University =
-  _students.each.andThen(_country).modify(s => s.toUpperCase())(itu)
+  _students.each.andThen(_country).modify(s => s.toUpperCase)(itu)
 
 /* Exercise 10
  *
@@ -403,7 +403,11 @@ lazy val itu5: University =
  */
 
 lazy val itu6: University =
-  ???
+  _students
+    // the type signature of s is very important apparently..
+    .andThen(filterIndex((s: String) => s.startsWith("A")))
+    .andThen(_country)
+    .modify(s => s.toUpperCase)(itu)
 
 /* Exercise 11
  *
