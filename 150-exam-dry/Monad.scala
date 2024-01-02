@@ -1,4 +1,4 @@
-package fpinscala.answers
+package adpro
 package monads
 
 import parsing.*
@@ -86,12 +86,6 @@ object Monad:
     extension [A](fa: Par[A])
       override def flatMap[B](f: A => Par[B]): Par[B] =
         Par.flatMap(fa)(f)
-
-  def parserMonad[P[+_]](p: Parsers[P]): Monad[P] = new:
-    def unit[A](a: => A) = p.succeed(a)
-    extension [A](fa: P[A])
-      override def flatMap[B](f: A => P[B]): P[B] =
-        p.flatMap(fa)(f)
 
   given optionMonad: Monad[Option] with
     def unit[A](a: => A) = Some(a)
