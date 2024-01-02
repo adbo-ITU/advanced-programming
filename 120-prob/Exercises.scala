@@ -141,6 +141,10 @@ def probPeterStarts: Double =
 // You do not need to write the answer to this question for grading.
 // Use it yourself to appreciate the power of the probabilistic programming
 // tool).
+//
+// Note for self: Creates an "outcome tree" whose height is the number of
+// balls. The number of outcomes is linear in number of balls. There are
+// approx 2 * BallsNo vertices with half of them being leaves (outcomes).
 
 // Exercise 5.
 
