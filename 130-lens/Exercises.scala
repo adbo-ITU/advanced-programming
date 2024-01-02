@@ -69,7 +69,7 @@ lazy val L2: Lens[String, (String, Int)] =
 lazy val L3: Lens[(String, Int), String] =
   Lens[(String, Int), String](get = { case (s, n) => s })(replace = s => {
     case (`s`, n) => (s, n)
-    case (s1, n)  => (s1, n + 1)
+    case (s1, n)  => (s, n + 1)
   })
 
 /* We will test these implementations in Exercise 3.  For now, we are
@@ -85,17 +85,23 @@ lazy val L3: Lens[(String, Int), String] =
 object Laws:
 
   def putGet[C: Arbitrary, A: Arbitrary: Equality](l: Lens[C, A]): Prop =
-    ???
+    forAll { (c: C, a: A) =>
+      l.get(l.replace(a)(c)) == a
+    }
 
   /* Write the GetPut law: */
 
   def getPut[C: Arbitrary: Equality, A](l: Lens[C, A]): Prop =
-    ???
+    forAll { (c: C) =>
+      l.replace(l.get(c))(c) == c
+    }
 
   /* Write the PutPut law: */
 
   def putPut[C: Arbitrary: Equality, A: Arbitrary](l: Lens[C, A]): Prop =
-    ???
+    forAll { (c: C, a1: A, a2: A) =>
+      l.replace(a2)(l.replace(a1)(c)) == l.replace(a2)(c)
+    }
 
   /* There is no tests for this exercise, but we will use the laws below,
    * which will also test them.
@@ -127,11 +133,13 @@ object Laws:
 
 object Ex03Spec extends org.scalacheck.Properties("ex03.."):
 
-  property("Ex03.00: putGet && putPut for L1") = ???
+  property("Ex03.00: putGet && putPut for L1") =
+    (Laws.putGet(L1) :| "putGet law: ") && (Laws.putPut(L1) :| "putPut law")
 
-  property("Ex03.01: getPut && putPut laws") = ???
+  property("Ex03.01: getPut && putPut laws") =
+    (Laws.getPut(L2) :| "getPut law: ") && (Laws.putPut(L2) :| "putPut law")
 
-  property("Ex03.02: L3 is well behaved") = ???
+  property("Ex03.02: L3 is well behaved") = Laws.wellBehavedTotalLense(L3)
 
 end Ex03Spec
 
