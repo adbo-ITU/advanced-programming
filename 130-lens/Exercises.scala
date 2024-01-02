@@ -184,7 +184,7 @@ def codiag[A]: Lens[Either[A, A], A] = {
  */
 
 def codiag1[A]: Lens[Either[A, A], A] =
-  ???
+  lensChoice.choice(Iso.id, Iso.id)
 
 /* Exercise 6
  *
