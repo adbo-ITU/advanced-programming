@@ -384,14 +384,14 @@ lazy val itu4: University =
  *   _country (1 line):
  */
 
-lazy val _country: Lens[Address, String] = ???
+lazy val _country: Lens[Address, String] = Focus[Address](_.country)
 
 /* Now compute itu5, that has the same entries as ITU, but all country names
  * are upper case. (1-6 lines)
  */
 
 lazy val itu5: University =
-  ???
+  _students.each.andThen(_country).modify(s => s.toUpperCase())(itu)
 
 /* Exercise 10
  *
