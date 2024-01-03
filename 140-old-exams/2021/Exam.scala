@@ -386,13 +386,16 @@ object Q12:
    * the code):
    */
 
-  // def sum (l: List[Int]): Int =
-  //   val initial: (List[Int], Int) = ???
-  //   val body = ???
-  //   val p = ???
+  def sum(l: List[Int]): Int =
+    type V = (List[Int], Int)
 
-  //   val result = loop[???,???](initial)(body)(p)
-  //   result._2
+    val initial: V = (l, 0)
+    val body = (a: V) => (a._1.tail, a._2 + a._1.head)
+    val p = (a: V) => a._1.nonEmpty
+
+    // val result = loop(idMonad.unit(initial))(body)(p)
+    val result = loop[V, Id](initial)(body)(p)
+    result._2
 
   /* DISCLAIMER: Normally, we do not want to compute a sum of a list in this way.
    * This is an artificial exercise for simplicity.
