@@ -90,7 +90,8 @@ object ExceptionalOptions:
    *
    * Notice that this question can be solved without answering Q1. */
 
-  def headOption[A](l: List[A]): Option[A] = ???
+  def headOption[A](l: List[A]): Option[A] =
+    SafeTotal((l: List[A]) => l.head)(l)
 
 end ExceptionalOptions
 

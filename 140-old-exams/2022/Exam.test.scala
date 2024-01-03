@@ -25,3 +25,7 @@ object Exam2022AutumnSpec extends org.scalacheck.Properties("exam-2022"):
     val f = (x: Int) => ???
     ExceptionalOptions.SafeTotal(f)(n).isEmpty
   }
+
+  property("AQ2.1") = forAll { (l: List[Int]) =>
+    ExceptionalOptions.headOption(l) == l.headOption
+  }
