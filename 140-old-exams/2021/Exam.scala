@@ -102,11 +102,15 @@ object Q2:
     */
 
   def sequence[Err, A](as: List[Either[Err, A]]): Either[Err, List[A]] =
-    as.foldRight(Right(Nil): Either[Err, List[A]])({
-      case (_, Left(curErr))      => Left(curErr)
-      case (Left(newErr), _)      => Left(newErr)
-      case (Right(cur), Right(l)) => Right(cur :: l)
-    })
+    // as.foldRight(Right(Nil): Either[Err, List[A]])({
+    //   case (_, Left(curErr))      => Left(curErr)
+    //   case (Left(newErr), _)      => Left(newErr)
+    //   case (Right(cur), Right(l)) => Right(cur :: l)
+    // })
+
+    as.foldRight(Right(Nil): Either[Err, List[A]])((cur, acc) =>
+      acc.flatMap(l => cur.map(c => c :: l))
+    )
 
 end Q2
 
