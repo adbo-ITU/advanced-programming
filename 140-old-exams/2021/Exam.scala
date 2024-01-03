@@ -152,7 +152,22 @@ object Q4:
 
   type Rand[A] = State[RNG, A]
 
-  lazy val riid: Rand[(Int, Int, Double)] = ???
+  lazy val riid: Rand[(Int, Int, Double)] =
+    for {
+      x1 <- State(RNG.int)
+      x2 <- State(RNG.int)
+      d <- State(RNG.double)
+      (a, b) = (math.min(x1, x2), math.max(x1, x2))
+      x = a + (b - a).abs * d
+    } yield (a, b, x)
+
+    // State((rng0: RNG) =>
+    //   val (x1, rng1) = rng0.nextInt
+    //   val (x2, rng2) = rng1.nextInt
+    //   val (d, rng3) = RNG.double(rng2)
+    //   val (a, b) = (math.min(x1, x2), math.max(x1, x2))
+    //   val triple = (a, b, a + (b - a).abs * d)
+    //   (triple, rng3))
 
 end Q4
 

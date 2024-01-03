@@ -8,6 +8,8 @@ import org.scalacheck.{Gen, Arbitrary}
 import org.scalacheck.Arbitrary.arbitrary
 import org.scalacheck.Prop.{forAll, forAllNoShrink}
 
+import fpinscala.answers.state.RNG
+
 object Exam2021AutumnSpec extends org.scalacheck.Properties("exam-2021"):
 
   // Q1
@@ -30,4 +32,9 @@ object Exam2021AutumnSpec extends org.scalacheck.Properties("exam-2021"):
 
   property("Q2.4") = forAll { () =>
     Q2.sequence(List()) == Right(List())
+  }
+
+  property("Q4.1") = forAll { (seed: Long) =>
+    val (l, r, x) = Q4.riid.run(RNG.Simple(seed))._1
+    l <= r && l.toDouble <= x && x <= r.toDouble
   }
