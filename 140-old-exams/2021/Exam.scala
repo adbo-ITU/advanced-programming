@@ -242,7 +242,10 @@ object Q7:
    * list is at least 10 elements? Explain.
    */
 
-  // Write here ...
+  // `size` forces the entire lazy list. Thus, for infinite lazy lists `size`
+  // would never terminate. For finite lists, a problem could be that `size` is
+  // linear in the whole list, while the user only needs to check the first 10
+  // elements.
 
 end Q7
 
