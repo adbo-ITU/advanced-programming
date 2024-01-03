@@ -116,19 +116,20 @@ end Q2
 
 object Q3:
 
-/** * TYPING
-  *
-  * Imagine that we want to implement `sequence` with Either not using List but
-  * any collection F[_] for which we know that it is Foldable.
-  *
-  * Q3. (10%)
-  *
-  * Write the type signature for this new function 'sequence'.
-  *
-  * Do not implement the function, just put '???' in the body.
-  */
-
-// def sequence ...
+  /** * TYPING
+    *
+    * Imagine that we want to implement `sequence` with Either not using List
+    * but any collection F[_] for which we know that it is Foldable.
+    *
+    * Q3. (10%)
+    *
+    * Write the type signature for this new function 'sequence'.
+    *
+    * Do not implement the function, just put '???' in the body.
+    */
+  def sequence[Err, A, F[_]: Foldable](
+      as: F[Either[Err, A]]
+  ): Either[Err, List[A]] = ???
 
 end Q3
 
