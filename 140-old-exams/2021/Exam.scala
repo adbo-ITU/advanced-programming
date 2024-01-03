@@ -80,7 +80,10 @@ object Q1:
    * the corresponding effect as calling the method hello in Java
    * implementation.  Uncomment the definition and fill in the gaps.
    */
-  // def hello (???: ???): ??? = ???
+  def hello(p: Printable): String =
+    p match
+      case Printable.Triangle => "triangle"
+      case Printable.Square   => "square"
 
 end Q1
 
