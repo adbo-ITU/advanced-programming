@@ -263,7 +263,13 @@ object Q8:
     * use 'size' from above, or any other functions from the course.
     */
 
-  def checkIfLongerEqThan[A](s: LazyList[A])(n: Int): Boolean = ???
+  def checkIfLongerEqThan[A](s: LazyList[A])(n: Int): Boolean =
+    // def f(s: LazyList[A], acc: Int): Boolean = s match
+    //   case _ if acc >= n       => true
+    //   case LazyList.Empty      => false
+    //   case LazyList.Cons(_, t) => f(t(), acc + 1)
+    // f(s, 0)
+    size(s.take(n)) == n
 
 end Q8
 
@@ -287,6 +293,8 @@ object Q9:
     */
 
   class MySpec extends org.scalacheck.Properties("Q9"):
+    import org.scalacheck.{Arbitrary, Gen, Prop}
+    import Arbitrary.*, Prop.*
 
     given Arbitrary[LazyList[Int]] =
       Arbitrary {
@@ -295,7 +303,11 @@ object Q9:
           .map { l => LazyList(l*) }
       }
 
-    property("Q9: Write the test here by replacing 'false' below") = false
+    property("Q9: Write the test here by replacing 'false' below") = forAll {
+      (as: LazyList[Int]) =>
+        (as != LazyList.empty) ==>
+          checkIfLongerEqThan(as.append(as))(2)
+    }
 
 end Q9
 
