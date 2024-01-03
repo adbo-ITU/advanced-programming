@@ -80,7 +80,10 @@ object ExceptionalOptions:
    *
    * https://docs.scala-lang.org/scala3/book/fp-functional-error-handling.html */
 
-  def SafeTotal[A,B](f: A => B): A => Option[B] = ???
+  def SafeTotal[A, B](f: A => B): A => Option[B] =
+    a =>
+      try Some(f(a))
+      catch case e: Throwable => None
 
   /* Q2. (5%) Use `SafeTotal` to implement the `headOption` function for
    * standard library lists by turning `head` to be safe.
