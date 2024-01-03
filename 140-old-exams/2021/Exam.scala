@@ -157,7 +157,7 @@ object Q4:
       x1 <- State(RNG.int)
       x2 <- State(RNG.int)
       d <- State(RNG.double)
-      (a, b) = (math.min(x1, x2), math.max(x1, x2))
+      (a, b) = ((x1 min x2), (x1 max x2))
       x = a + (b - a).abs * d
     } yield (a, b, x)
 
