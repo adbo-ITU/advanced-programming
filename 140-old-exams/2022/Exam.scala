@@ -125,10 +125,11 @@ object PrimesAndLaziness:
    * - The first two prime numbers `p1`, `p2` that are 10 apart (p2 - p1 == 10)
    * - The second next pair `p3, p4` with the same property. */
 
-  def primesApart(n: Int): LazyList[(Int, Int)] = ???
+  def primesApart(n: Int): LazyList[(Int, Int)] =
+    primes.zip(primes.drop(1)).filter({ case (p1, p2) => p2 - p1 == n })
 
-  lazy val (p1, p2): (Int, Int) = ???
-  lazy val (p3, p4): (Int, Int) = ???
+  lazy val (p1, p2): (Int, Int) = primesApart(10).headOption.get
+  lazy val (p3, p4): (Int, Int) = primesApart(10).drop(1).headOption.get
 
   /* Q4 (5%).  Explain in English how your solution uses laziness:
    * - Name all the non-strict operators used in `primesApart` and in `primeFrom`
