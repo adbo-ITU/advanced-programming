@@ -416,6 +416,8 @@ object Q13:
     */
 
   def loop[A, M[_]: Monad](initial: M[A])(body: A => A)(p: A => Boolean): M[A] =
-    ???
+    initial.flatMap(a =>
+      if p(a) then loop(initial.map(body))(body)(p) else initial
+    )
 
 end Q13
