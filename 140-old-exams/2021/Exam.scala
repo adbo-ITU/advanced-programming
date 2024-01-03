@@ -101,7 +101,12 @@ object Q2:
     * error value seen on the input list.
     */
 
-  def sequence[Err, A](as: List[Either[Err, A]]): Either[Err, List[A]] = ???
+  def sequence[Err, A](as: List[Either[Err, A]]): Either[Err, List[A]] =
+    as.foldRight(Right(Nil): Either[Err, List[A]])({
+      case (_, Left(curErr))      => Left(curErr)
+      case (Left(newErr), _)      => Left(newErr)
+      case (Right(cur), Right(l)) => Right(cur :: l)
+    })
 
 end Q2
 
