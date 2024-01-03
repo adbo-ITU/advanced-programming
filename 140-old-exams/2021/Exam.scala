@@ -323,7 +323,8 @@ object Q10:
     * Par[Option[A]] value, for any type 'A'.
     */
 
-  def flatten[A](opa: Option[Par[A]]): Par[Option[A]] = ???
+  def flatten[A](opa: Option[Par[A]]): Par[Option[A]] =
+    opa.map(a => a.map(r => Some(r))).getOrElse(Par.unit(None))
 
 end Q10
 
@@ -335,7 +336,11 @@ end Q10
   * oriented description, not an explanation of the implementation.
   */
 
-// Write here ...
+// The function lets the user obtain a parallel computation that can always
+// be run. If the user needs lots of different Par instances in one collection
+// then flatten could allow the user to use some function that constructs a Par
+// that fails to construct it but still be able to use the result in a higher
+// order collection by flattening it.
 
 object Q12:
 
