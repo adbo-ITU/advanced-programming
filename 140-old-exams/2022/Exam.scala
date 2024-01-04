@@ -257,7 +257,8 @@ object SizedLists:
    * the third element in the list. The function should only be allowed to be
    * called on a list containing at least three elements. */
 
-  // def third[A, S] ...
+  def third[A, S](l: SizedList[A, Inc[Inc[Inc[S]]]]) =
+    head(tail(tail(l)))
 
   /* Q10. (15%) Write a function `append` that adds an element to the end of the
    * List of type `Sized[A, S]` for any `A` and any `S`. Use recursion and respond to
