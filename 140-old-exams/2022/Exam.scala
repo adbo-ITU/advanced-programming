@@ -187,9 +187,14 @@ object ApplesToApples:
    * does not compile and then add necessary code before the assertion so that
    * pickBetter can be used to pick a larger apple. */
 
-  // Write here ...
+  // Because the implementation of pickBetter uses summon, meaning it expects
+  // some implementation of Better[T] to be available that it can use when the
+  // user calls pickBetter. To fix it, we must give such an instance.
 
-  // assert(pickBetter(bigApple, smallApple) == bigApple)
+  given Better[Apple] = new:
+    def leftBetter(left: Apple, right: Apple) = left.weight > right.weight
+
+  assert(pickBetter(bigApple, smallApple) == bigApple)
 
   /* Q7. (10%) Make it possible to check whether one value of T is better than
    * another value of T using an infix method `betterThan` so that the
