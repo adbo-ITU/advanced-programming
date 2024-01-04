@@ -192,7 +192,8 @@ object ApplesToApples:
   // user calls pickBetter. To fix it, we must give such an instance.
 
   given Better[Apple] = new:
-    def leftBetter(left: Apple, right: Apple) = left.weight > right.weight
+    def leftBetter(left: Apple, right: Apple) =
+      left.weight > right.weight
 
   assert(pickBetter(bigApple, smallApple) == bigApple)
 
@@ -205,7 +206,11 @@ object ApplesToApples:
    * make it possible just for the Apple type (it will give some points).
    */
 
-  // assert(bigApple betterThan smallApple)
+  extension [T: Better](self: T)
+    infix def betterThan(other: T) =
+      summon[Better[T]].leftBetter(self, other)
+
+  assert(bigApple betterThan smallApple)
 
 end ApplesToApples
 
