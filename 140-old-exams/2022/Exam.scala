@@ -135,7 +135,15 @@ object PrimesAndLaziness:
    * - Name all the non-strict operators used in `primesApart` and in `primeFrom`
    * - Explain what would happen if these operators were strict instead. */
 
-  // Write here ...
+  // My solution makes use of two non-strict operators: zip and filter. Under
+  // the hood, both of these use the cons function, which takes two lazily
+  // evaluated arguments, which are only evaluated incrementally when consuming
+  // the lazy list.
+  //
+  // If the arguments were not lazily evaluated, the program would try to
+  // compute the entire infinite sequence at once, which would, in theory,
+  // never terminate, but in reality it would be very slow and run out of
+  // memory.
 
   /* Q5 (10%) Write a property-based test checking that for all even numbers
    * `n` such that `n <= 20` the call `primesApart(n)` generates a lazy list
