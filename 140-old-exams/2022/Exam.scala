@@ -290,6 +290,17 @@ object SizedLists:
    * other).  Each example should violate the variance of exactly one type
    * parameter. */
 
-  // Write here ...
+  // A is covariant and S is invariant.
+  //
+  // Correct type refinement:
+  //   SizedList[Nothing, Inc[Null]] <: SizedList[Int, Inc[Null]]
+  //
+  // Incorrect type refinement that violates the covariance of A by expecting contravariance:
+  //   SizedList[List[Nothing], Inc[Null]] <: SizedList[List[Int], Inc[Null]]
+  //
+  // Incorrect type refinement that violates the invariance of S:
+  //   SizedList[Int, Nothing] <: SizedList[Int, Null]
+  // or
+  //   SizedList[Int, Null] <: SizedList[Int, Inc[Null]]
 
 end SizedLists
