@@ -264,12 +264,20 @@ object SizedLists:
    * List of type `Sized[A, S]` for any `A` and any `S`. Use recursion and respond to
    * the question in English below. */
 
-  // def append[ ... ](a: ..., l: ...): ... = ???
+  def append[A, S](a: A, l: SizedList[A, S]): SizedList[A, Inc[S]] =
+    l match
+      case Empty       => Cons(a, Empty)
+      case Cons(x, tl) => Cons(x, append(a, tl))
 
   /* Mark the polymorphically recursive call in your solution. Describe in
    * English what the type parameters are instantiated to in this call. */
 
-  // Write here ...
+  // Something something inferred type. In Cons case:
+  //   val x: A$3
+  //   val tl: SizedList[A$3, S$1]
+  // Scala conjures up new types by itself. Here, S$1 is some type where
+  // Inc[S$1] = S. This type only exists in the Cons case, not in the empty
+  // case.
 
   /* Q11. (10%) Revisit the ADT definition of `SizedList` in the beginning of
    * this section. For *each* of the type parameters of the `SizedList` type
