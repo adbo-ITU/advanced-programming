@@ -154,7 +154,10 @@ object PrimesAndLaziness:
 
   class primesApartTest extends org.scalacheck.Properties("primesApartTest"):
 
-    property("Elements in pairs returned by primesApart differ by n") = ???
+    property("Elements in pairs returned by primesApart differ by n") =
+      forAll(Gen.choose(2, 20).suchThat(_ % 2 == 0)) { (n: Int) =>
+        primesApart(n).take(5).forAll { (p1, p2) => p2 - p1 == n }
+      }
 
   end primesApartTest
 
