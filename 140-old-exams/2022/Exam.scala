@@ -239,9 +239,9 @@ object SizedLists:
    * explicit type annotation for a list `l2` that contains three elements
    * 3, 1, 4. */
 
-  val l1 = Cons(41, l0)
+  val l1: SizedList[Int, Inc[Null]] = Cons(41, l0)
 
-  val l2 = ???
+  val l2: SizedList[Int, Inc[Inc[Inc[Null]]]] = Cons(3, Cons(1, Cons(4, Empty)))
 
   /* For `SizedList`s we can write a safe version of `head` and `tail` that
    * can only be applied to a non-empty list. The implementations are included
